@@ -258,10 +258,39 @@
             color: var(--text-muted);
         }
 
+        /* ============================ RESPONSIVIDADE AVANÇADA ============================== */
+        
+        /* Tablet e Monitores Pequenos */
+        @media(max-width: 950px) {
+            .charts-container { 
+                grid-template-columns: 1fr; /* Força 1 gráfico por linha para não quebrar */ 
+            }
+        }
+
         @media(max-width: 768px) {
             .simulation-bar { flex-direction: column; text-align: center; }
             .header-actions { width: 100%; justify-content: center; margin-top: 10px; }
-            .charts-container { grid-template-columns: 1fr; }
+        }
+
+        /* Celulares (Mobile First Adjustments) */
+        @media (max-width: 480px) {
+            .container { padding: 0 15px; } /* Mais espaço lateral */
+            
+            .kpi-value { font-size: 2rem; } /* Fonte menor para não quebrar */
+            .brand-text h1 { font-size: 1rem; }
+            
+            /* Botões do simulador empilhados para facilitar o toque */
+            .sim-controls {
+                flex-direction: column;
+                border-radius: 15px;
+                width: 100%;
+            }
+            .sim-controls button {
+                width: 100%;
+                margin: 2px 0;
+                padding: 12px; /* Área de toque maior */
+                border-radius: 8px;
+            }
         }
     </style>
 </head>
@@ -435,8 +464,6 @@
             },
 
             updateKPIs: function(data) {
-                // LÓGICA CORRIGIDA: Baseada no último status acumulado (Curva S)
-                
                 // Encontra o índice da última medição válida (>0)
                 let lastIdx = data.real.reduce((acc, val, idx) => val > 0 ? idx : acc, 0);
                 
@@ -481,9 +508,9 @@
                     const cpi = data.custoCPI[i] || 1;
                     const riskScore = data.riscos[i].p * data.riscos[i].i;
 
-                    let statusIcon = spi >= 1 ? '<i class="fas fa-check-circle" style="color:var(--success)"></i>' : 
-                                     spi > 0.8 ? '<i class="fas fa-exclamation-circle" style="color:var(--warning)"></i>' : 
-                                     '<i class="fas fa-times-circle" style="color:var(--danger)"></i>';
+                    let statusIcon = spi >= 1 ? '<i class="fas fa-check-circle" style="color:var(--success)"></i>' :
+                                      spi > 0.8 ? '<i class="fas fa-exclamation-circle" style="color:var(--warning)"></i>' :
+                                      '<i class="fas fa-times-circle" style="color:var(--danger)"></i>';
 
                     let row = `
                         <tr>

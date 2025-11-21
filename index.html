@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard Executivo - Silvanio Gois</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <style>
         /* ============================ TEMA & VARIÁVEIS ============================== */
-        :root {
-            --primary: #1f5fa3; /* Azul Corporativo Sólido */
+        :root{
+            --primary: #1f5fa3;
             --primary-dark: #163f6b;
-            --accent: #00d2d3; 
+            --accent: #00d2d3;
             --success: #10ac84;
             --warning: #feca57;
             --danger: #ff6b6b;
@@ -26,393 +26,286 @@
             --text-muted: #636e72;
             --radius: 12px;
             --shadow: 0 4px 20px rgba(0,0,0,0.05);
+            --card-padding: 24px;
         }
 
+        /* Reset visual mínimo */
+        * { box-sizing: border-box; }
+        html,body { height: 100%; }
+
         body {
-            font-family: "Inter", sans-serif;
+            font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
             background: var(--gray-bg);
             margin: 0;
             padding: 0 0 60px 0;
             color: var(--text-main);
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.4;
         }
 
         /* ============================ HEADER ============================== */
         header {
             background: var(--white);
-            border-bottom: 1px solid #e0e0e0;
-            padding: 15px 0;
+            border-bottom: 1px solid #e9eef2;
+            padding: 14px 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
         }
 
         .header-content {
             max-width: 1200px;
-            margin: auto;
-            padding: 0 25px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 12px;
             flex-wrap: wrap;
-            gap: 15px;
         }
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
+        .brand { display:flex; align-items:center; gap:12px; }
         .profile-img {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--primary);
+            width:52px; height:52px; border-radius:50%; object-fit:cover;
+            border:2px solid var(--primary);
         }
+        .brand-text h1 { margin:0; font-size:1.06rem; font-weight:700; color:var(--primary-dark); }
+        .brand-text span { display:block; font-size:0.82rem; color:var(--text-muted); font-weight:500; }
 
-        .brand-text h1 {
-            margin: 0;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-        }
-
-        .brand-text span {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 10px;
-        }
-
+        .header-actions { display:flex; gap:10px; align-items:center; }
         .btn {
-            padding: 10px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            border: none;
-            cursor: pointer;
+            padding:9px 16px; border-radius:28px; text-decoration:none; font-weight:600;
+            font-size:0.9rem; display:inline-flex; align-items:center; gap:8px; border:none; cursor:pointer;
+            transition: transform .12s ease, box-shadow .12s ease;
         }
+        .btn:focus { outline: 3px solid rgba(31,95,163,0.12); outline-offset:2px; }
+        .btn-primary { background:var(--primary); color:var(--white); box-shadow:0 6px 18px rgba(31,95,163,0.12); }
+        .btn-primary:hover { transform: translateY(-2px); background:var(--primary-dark); }
+        .btn-outline { background:transparent; color:var(--primary); border:1px solid var(--primary); }
+        .btn-outline:hover { background:#f0f5fa; }
 
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 4px 10px rgba(31, 95, 163, 0.3);
-        }
-        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-        .btn-outline:hover { background: #f0f5fa; }
-
-        /* ============================ LAYOUT ============================== */
+        /* ============================ LAYOUT PRINCIPAL ============================== */
         .container {
             max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 25px;
+            margin: 28px auto;
+            padding: 0 20px;
             display: grid;
-            gap: 25px;
+            gap: 22px;
         }
 
         /* ============================ SIMULADOR ============================== */
         .simulation-bar {
             background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-            padding: 30px;
+            padding: 20px;
             border-radius: var(--radius);
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            box-shadow: 0 10px 25px rgba(31, 95, 163, 0.25);
+            color: #fff;
+            display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap;
+            box-shadow: 0 10px 25px rgba(31,95,163,0.12);
         }
+        .sim-text h2 { margin:0; font-size:1.18rem; display:flex; gap:10px; align-items:center; }
+        .sim-text p { margin:6px 0 0 0; opacity:0.95; font-weight:300; font-size:0.95rem; }
 
-        .sim-text h2 { margin: 0; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
-        .sim-text p { margin: 5px 0 0 0; opacity: 0.9; font-weight: 300; }
-
-        .sim-controls {
-            background: rgba(255,255,255,0.15);
-            padding: 5px;
-            border-radius: 40px;
-            display: flex;
-        }
-
+        .sim-controls { background: rgba(255,255,255,0.12); padding:6px; border-radius:999px; display:flex; gap:6px; }
         .sim-controls button {
-            background: transparent;
-            border: none;
-            color: rgba(255,255,255,0.7);
-            padding: 10px 25px;
-            font-weight: 600;
-            cursor: pointer;
-            border-radius: 30px;
-            transition: 0.3s;
+            background:transparent; border:none; color:rgba(255,255,255,0.85); padding:8px 16px; font-weight:700; border-radius:28px;
+            cursor:pointer; font-size:0.88rem;
         }
-
-        .sim-controls button.active {
-            background: white;
-            color: var(--primary);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        
-        .sim-controls button:hover:not(.active) { color: white; }
+        .sim-controls button.active { background: #fff; color: var(--primary); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+        .sim-controls button:focus { outline: 3px solid rgba(255,255,255,0.12); outline-offset:2px; }
 
         /* ============================ KPIs ============================== */
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
+        .kpi-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px; }
         .card {
             background: var(--white);
-            padding: 25px;
+            padding: var(--card-padding);
             border-radius: var(--radius);
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.04);
             box-shadow: var(--shadow);
-            position: relative;
-            transition: transform 0.2s;
         }
-        
-        .kpi-card { text-align: center; padding: 30px 20px; }
-        
-        .kpi-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            display: block;
-            margin: 10px 0 5px 0;
-            color: var(--text-main);
-        }
+        .kpi-card { text-align:center; padding: 22px 14px; }
+        .kpi-value { font-size:2.4rem; font-weight:800; color:var(--text-main); display:block; margin:10px 0 6px; }
+        .kpi-label { display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:1.2px; color:var(--text-muted); font-weight:700; }
 
-        .kpi-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        .badge {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            display: inline-block;
-        }
-        .bg-green { background: #d1fae5; color: #065f46; }
-        .bg-red   { background: #fee2e2; color: #991b1b; }
-        .bg-blue  { background: #dbeafe; color: #1e40af; }
+        .badge { padding:6px 12px; border-radius:20px; font-size:0.72rem; font-weight:700; text-transform:uppercase; display:inline-block; }
+        .bg-green { background:#d1fae5; color:#065f46; }
+        .bg-red   { background:#fee2e2; color:#991b1b; }
+        .bg-blue  { background:#dbeafe; color:#1e40af; }
+        .bg-warning { background:#fff4e6; color:#8a5800; }
 
         /* ============================ TABELA ============================== */
-        .table-responsive { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th { text-align: left; color: var(--text-muted); font-weight: 600; padding: 15px; border-bottom: 2px solid #f0f0f0; }
-        td { padding: 15px; border-bottom: 1px solid #f0f0f0; font-size: 0.95rem; }
-        tr:last-child td { border-bottom: none; }
+        .table-responsive { overflow-x:auto; }
+        table { width:100%; border-collapse:collapse; min-width:620px; }
+        thead th { text-align:left; color:var(--text-muted); font-weight:700; padding:12px 14px; border-bottom:2px solid #f3f6f8; font-size:0.88rem; }
+        tbody td { padding:12px 14px; border-bottom:1px solid #f3f6f8; font-size:0.92rem; color:var(--text-main); }
+        tbody tr:last-child td { border-bottom:none; }
+
+        /* mini barra de risco */
+        .risk-bar { width:90px; height:8px; background:#e9eef2; border-radius:6px; overflow:hidden; display:inline-block; vertical-align:middle; }
+        .risk-bar > i { display:block; height:100%; border-radius:6px; }
 
         /* ============================ CHARTS ============================== */
-        .charts-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 25px;
-        }
-        .chart-box { position: relative; height: 300px; width: 100%; }
+        .charts-container { display:grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap:20px; }
+        .chart-box { position:relative; height:320px; width:100%; }
 
-        /* ============================ DIAGNÓSTICO & FECHAMENTO ============================== */
-        .insight-box {
-            border-left: 5px solid var(--primary);
-            background: #f8fafc;
-        }
+        /* ============================ INSIGHT & SUMMARY ============================== */
+        .insight-box { border-left:5px solid var(--primary); background:#f8fafc; padding:22px; }
+        .insight-title { font-weight:700; color:var(--primary-dark); margin-bottom:8px; display:block; }
+        .insight-text { font-size:1rem; color:#475569; margin:0; }
 
-        .insight-title { font-weight: 700; color: var(--primary-dark); margin-bottom: 10px; display: block; }
-        .insight-text { font-size: 1.05rem; color: #475569; line-height: 1.6; margin: 0; }
-
-        .executive-summary {
-            background: var(--white);
-            padding: 40px;
-        }
-
-        .executive-summary h3 { margin-top: 0; color: var(--primary-dark); }
-        .executive-summary li { margin-bottom: 10px; color: var(--text-main); }
+        .executive-summary { background:var(--white); padding:26px; }
+        .executive-summary h3 { margin-top:0; color:var(--primary-dark); }
+        .executive-summary ul { padding-left:18px; margin:10px 0 0 0; }
+        .executive-summary li { margin-bottom:8px; color:var(--text-main); font-size:0.95rem; }
 
         /* ============================ FOOTER ============================== */
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
+        .footer { text-align:center; margin-top:28px; font-size:0.9rem; color:var(--text-muted); }
 
-        /* ============================ RESPONSIVIDADE AVANÇADA ============================== */
-        
-        /* Tablet e Monitores Pequenos */
-        @media(max-width: 950px) {
-            .charts-container { 
-                grid-template-columns: 1fr; /* Força 1 gráfico por linha para não quebrar */ 
-            }
+        /* ============================ RESPONSIVIDADE ============================== */
+        @media (max-width: 950px){
+            .chart-box { height:300px; }
         }
-
-        @media(max-width: 768px) {
-            .simulation-bar { flex-direction: column; text-align: center; }
-            .header-actions { width: 100%; justify-content: center; margin-top: 10px; }
+        @media (max-width: 768px){
+            .simulation-bar { flex-direction:column; text-align:center; gap:10px; }
+            .header-actions { width:100%; justify-content:center; margin-top:8px; }
+            .charts-container { grid-template-columns: 1fr; }
+            .kpi-value { font-size:2rem; }
+            .brand-text h1 { font-size:1rem; }
         }
-
-        /* Celulares (Mobile First Adjustments) */
-        @media (max-width: 480px) {
-            .container { padding: 0 15px; } /* Mais espaço lateral */
-            
-            .kpi-value { font-size: 2rem; } /* Fonte menor para não quebrar */
-            .brand-text h1 { font-size: 1rem; }
-            
-            /* Botões do simulador empilhados para facilitar o toque */
-            .sim-controls {
-                flex-direction: column;
-                border-radius: 15px;
-                width: 100%;
-            }
-            .sim-controls button {
-                width: 100%;
-                margin: 2px 0;
-                padding: 12px; /* Área de toque maior */
-                border-radius: 8px;
-            }
+        @media (max-width: 480px){
+            .container { padding:0 14px; }
+            .simulation-bar { padding:14px; }
+            .sim-controls { flex-direction:column; padding:6px; width:100%; }
+            .sim-controls button { width:100%; margin:4px 0; padding:10px; border-radius:10px; }
+            table { min-width:560px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="header-content">
-            <div class="brand">
-                <img src="Executivo_sg_projetos.png" class="profile-img" 
-                     onerror="this.src='https://ui-avatars.com/api/?name=Silvanio+Gois&background=1f5fa3&color=fff&size=128'" alt="Silvanio Gois">
+        <div class="header-content" role="banner">
+            <div class="brand" aria-hidden="false">
+                <img src="Executivo_sg_projetos.png" class="profile-img" alt="Foto Silvanio Gois"
+                     onerror="this.src='https://ui-avatars.com/api/?name=Silvanio+Gois&background=1f5fa3&color=fff&size=128'">
                 <div class="brand-text">
                     <h1>Silvanio Gois</h1>
                     <span>Gestão Estratégica | PMO Data-Driven</span>
                 </div>
             </div>
-            <div class="header-actions">
-                <a href="https://www.linkedin.com/in/silvanio-gois-6667b918b/" target="_blank" class="btn btn-outline">
-                    <i class="fab fa-linkedin"></i> LinkedIn
+
+            <div class="header-actions" role="navigation" aria-label="Ações de contato">
+                <a href="https://www.linkedin.com/in/silvanio-gois-6667b918b/" target="_blank" rel="noopener" class="btn btn-outline" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin" aria-hidden="true"></i> LinkedIn
                 </a>
-                <a href="https://wa.me/5513988301094" target="_blank" class="btn btn-primary">
-                    <i class="fab fa-whatsapp"></i> Contato
+                <a href="https://wa.me/5513988301094" target="_blank" rel="noopener" class="btn btn-primary" aria-label="WhatsApp">
+                    <i class="fab fa-whatsapp" aria-hidden="true"></i> Contato
                 </a>
             </div>
         </div>
     </header>
 
-    <div class="container">
-        
-        <div class="simulation-bar">
+    <main class="container" role="main">
+        <section class="simulation-bar" aria-labelledby="sim-title">
             <div class="sim-text">
-                <h2><i class="fas fa-sliders-h"></i> Simulador de Cenários</h2>
-                <p>Alterne os modos para ver como aplico estratégias de recuperação e forecasting.</p>
+                <h2 id="sim-title"><i class="fas fa-sliders-h" aria-hidden="true"></i> Simulador de Cenários</h2>
+                <p>Alterne os modos para visualizar impacto no cronograma, custo e riscos (EVM).</p>
             </div>
-            <div class="sim-controls">
-                <button onclick="app.loadScenario('realista')" class="active" id="btn-real">Realista</button>
-                <button onclick="app.loadScenario('critico')" id="btn-crit">Crítico (Atraso)</button>
-                <button onclick="app.loadScenario('otimista')" id="btn-oti">Otimista</button>
-            </div>
-        </div>
 
-        <div class="kpi-grid">
-            <div class="card kpi-card">
-                <span class="badge bg-blue">CRONOGRAMA</span>
+            <div class="sim-controls" role="tablist" aria-label="Cenários">
+                <button onclick="app.loadScenario('realista')" class="active" id="btn-real" role="tab" aria-selected="true">Realista</button>
+                <button onclick="app.loadScenario('critico')" id="btn-crit" role="tab" aria-selected="false">Crítico (Atraso)</button>
+                <button onclick="app.loadScenario('otimista')" id="btn-oti" role="tab" aria-selected="false">Otimista</button>
+            </div>
+        </section>
+
+        <section class="kpi-grid" aria-label="Indicadores chave">
+            <div class="card kpi-card" aria-hidden="false">
+                <span class="badge bg-blue" aria-hidden="true">CRONOGRAMA</span>
                 <span class="kpi-value" id="kpi-fisico">0%</span>
                 <span class="kpi-label">Avanço Físico Real</span>
             </div>
+
             <div class="card kpi-card">
-                <div id="badge-spi-container"><span class="badge bg-green">EFICIÊNCIA</span></div>
+                <div id="badge-spi-container"><span class="badge bg-green" id="badge-spi">EFICIÊNCIA</span></div>
                 <span class="kpi-value" id="kpi-spi">0.00</span>
                 <span class="kpi-label">SPI (Prazo)</span>
             </div>
+
             <div class="card kpi-card">
-                <div id="badge-cpi-container"><span class="badge bg-warning">ORÇAMENTO</span></div>
-                <span class="kpi-value" id="kpi-cpi">0.00</span> <span class="kpi-label">CPI (Custo Performance)</span>
+                <div id="badge-cpi-container"><span class="badge bg-warning" id="badge-cpi">ORÇAMENTO</span></div>
+                <span class="kpi-value" id="kpi-cpi">0.00</span>
+                <span class="kpi-label">CPI (Custo)</span>
             </div>
+
             <div class="card kpi-card">
                 <span class="badge bg-red">RISCOS</span>
                 <span class="kpi-value" id="kpi-riscos">0</span>
-                <span class="kpi-label">Pontos de Atenção (High)</span>
+                <span class="kpi-label">Pontos de Atenção</span>
             </div>
-        </div>
+        </section>
 
-        <div class="card insight-box">
-            <span class="insight-title"><i class="fas fa-robot"></i> Diagnóstico & Ação Recomendada (IA PMO):</span>
+        <section class="card insight-box" aria-live="polite">
+            <span class="insight-title"><i class="fas fa-robot" aria-hidden="true"></i> Diagnóstico & Ação Recomendada (IA PMO)</span>
             <p id="diagnostico-texto" class="insight-text">Carregando análise...</p>
-        </div>
+        </section>
 
-        <div class="card">
-            <h3 style="color: var(--primary); margin-top:0;">Matriz de Desempenho por Fase (EVM)</h3>
-            <div class="table-responsive">
+        <section class="card" aria-labelledby="evm-title">
+            <h3 id="evm-title" style="color:var(--primary); margin-top:0;">Matriz de Desempenho por Fase (EVM)</h3>
+            <div class="table-responsive" role="region" aria-label="Matriz de desempenho">
                 <table id="tabela-evm">
                     <thead>
                         <tr>
-                            <th>Fase do Projeto</th>
-                            <th>Planejado</th>
-                            <th>Realizado</th>
-                            <th>Status (SPI)</th>
-                            <th>Budget (CPI)</th>
-                            <th>Riscos (P x I)</th>
+                            <th scope="col">Fase do Projeto</th>
+                            <th scope="col">Planejado</th>
+                            <th scope="col">Realizado</th>
+                            <th scope="col">Status (SPI)</th>
+                            <th scope="col">Budget (CPI)</th>
+                            <th scope="col">Riscos (P x I)</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
             </div>
-        </div>
+        </section>
 
-        <div class="charts-container">
-            <div class="card">
+        <section class="charts-container" aria-label="Gráficos">
+            <div class="card" role="img" aria-label="Curva S e Forecast">
                 <h3 style="margin-top:0; font-size:1rem; color:var(--text-muted);">CURVA S + TENDÊNCIA (FORECAST)</h3>
-                <div class="chart-box"><canvas id="chartCurvaS"></canvas></div>
+                <div class="chart-box"><canvas id="chartCurvaS" aria-hidden="false"></canvas></div>
             </div>
-            <div class="card">
-                <h3 style="margin-top:0; font-size:1rem; color:var(--text-muted);">MAPA DE CALOR DE RISCOS</h3>
-                <div class="chart-box"><canvas id="chartRiscos"></canvas></div>
-            </div>
-        </div>
 
-        <div class="card executive-summary">
-            <h3><i class="fas fa-briefcase"></i> Diferencial Estratégico</h3>
+            <div class="card" role="img" aria-label="Mapa de calor de riscos">
+                <h3 style="margin-top:0; font-size:1rem; color:var(--text-muted);">MAPA DE CALOR DE RISCOS</h3>
+                <div class="chart-box"><canvas id="chartRiscos" aria-hidden="false"></canvas></div>
+            </div>
+        </section>
+
+        <section class="card executive-summary" aria-labelledby="diff-title">
+            <h3 id="diff-title"><i class="fas fa-briefcase" aria-hidden="true"></i> Diferencial Estratégico</h3>
             <p>Este painel demonstra como traduzo a complexidade do dia a dia em <strong>visibilidade executiva</strong> e tomada de decisão.</p>
             <ul>
-                <li><strong>Visão 360º:</strong> Integração total entre Cronograma (Físico), Orçamento (CPI) e Tendência (Forecast).</li>
-                <li><strong>Gestão de Crise:</strong> Atuação preditiva. Como visto no cenário "Crítico", utilizo táticas de <em>Crashing</em> e congelamento de escopo antes que o atraso se torne irreversível.</li>
-                <li><strong>Governança:</strong> Transformo dados brutos em narrativas visuais claras para reportar ao C-Level, eliminando o "achismo".</li>
+                <li><strong>Visão 360º:</strong> Integração entre Cronograma (Físico), Orçamento (CPI) e Tendência (Forecast).</li>
+                <li><strong>Gestão de Crise:</strong> Atuação preditiva. Em cenários críticos, aplicar Crashing e controlar escopo para mitigar atrasos.</li>
+                <li><strong>Governança:</strong> Dados transformados em narrativa objetiva para reporting ao C-Level.</li>
             </ul>
-            <p style="text-align: right; font-weight: 600; color: var(--primary); margin-top: 25px; border-top: 1px solid #eee; padding-top: 15px;">
-                <i class="fas fa-arrow-right"></i> Vamos discutir como implantar essa maturidade de gestão nos seus projetos?
+            <p style="text-align:right; font-weight:600; color:var(--primary); margin-top:14px; border-top:1px solid #eee; padding-top:12px;">
+                <i class="fas fa-arrow-right" aria-hidden="true"></i> Vamos discutir implantação dessa maturidade nos seus projetos?
             </p>
-        </div>
+        </section>
+    </main>
 
-    </div>
-
-    <div class="footer">
+    <footer class="footer" role="contentinfo">
         &copy; 2025 Silvanio Gois - Portfólio Interativo de Gestão de Projetos.<br>
         <small>Desenvolvido para demonstração de competências em Data-Driven PMO.</small>
-    </div>
+    </footer>
 
     <script>
-        // LÓGICA DE NEGÓCIO (EVM ENGINE)
+        // ========================= LÓGICA DE NEGÓCIO (EVM ENGINE) =========================
         const app = {
             charts: { sCurve: null, risk: null },
-            
+
             scenarios: {
                 realista: {
                     nome: "Realista",
@@ -422,41 +315,51 @@
                     forecast: [20, 44, 72, 88, 98],
                     custoCPI: [1.0, 0.98, 0.97, 0.99, 0],
                     riscos: [{p:2, i:2}, {p:3, i:3}, {p:4, i:3}, {p:2, i:2}, {p:1, i:1}],
-                    insight: "<strong>Cenário Estável.</strong> O projeto apresenta desvios marginais (<5%).<br> <span style='color:#1f5fa3'>✔ Ação Recomendada:</span> Manter rituais de controle semanais e validar medições físicas. Foco em manter a tendência do CPI estável na fase de Execução."
+                    insight: "<strong>Cenário Estável.</strong> O projeto apresenta desvios marginais (&lt;5%).<br><span style='color:#1f5fa3'>✔ Ação Recomendada:</span> Manter rituais de controle semanais e validar medições físicas."
                 },
                 critico: {
                     nome: "Crítico",
                     fases: ['Iniciação', 'Planejamento', 'Execução', 'Monitoramento', 'Encerramento'],
                     plan: [20, 50, 80, 95, 100],
                     real: [20, 45, 55, 60, 0], // Atraso severo
-                    forecast: [20, 45, 55, 65, 75], // Previsão de não entrega
-                    custoCPI: [1.0, 0.90, 0.75, 0.70, 0], 
+                    forecast: [20, 45, 55, 65, 75],
+                    custoCPI: [1.0, 0.90, 0.75, 0.70, 0],
                     riscos: [{p:2, i:3}, {p:4, i:5}, {p:5, i:5}, {p:5, i:4}, {p:2, i:2}],
-                    insight: "<strong>ALERTA VERMELHO:</strong> Descolamento severo do cronograma e custo.<br> <span style='color:#d63031'>⚠ Ação Recomendada:</span> 1. Aplicar <em>Crashing</em> (adicionar recursos) nas atividades críticas. 2. Acionar plano de contingência e escalar Matriz de Riscos para o Steering Committee."
+                    insight: "<strong>ALERTA VERMELHO:</strong> Descolamento severo do cronograma e custo.<br><span style='color:#d63031'>⚠ Ação Recomendada:</span> Aplicar Crashing em atividades críticas e acionar contingência."
                 },
                 otimista: {
                     nome: "Otimista",
                     fases: ['Iniciação', 'Planejamento', 'Execução', 'Monitoramento', 'Encerramento'],
                     plan: [20, 40, 65, 80, 100],
-                    real: [20, 42, 70, 85, 10], // Adiantado
-                    forecast: [20, 42, 70, 85, 100], 
-                    custoCPI: [1.0, 1.05, 1.10, 1.15, 0], 
+                    real: [20, 42, 70, 85, 10],
+                    forecast: [20, 42, 70, 85, 100],
+                    custoCPI: [1.0, 1.05, 1.10, 1.15, 0],
                     riscos: [{p:1, i:2}, {p:2, i:2}, {p:3, i:1}, {p:1, i:1}, {p:1, i:1}],
-                    insight: "<strong>Alta Performance.</strong> O time está entregando acima do esperado com economia.<br> <span style='color:#10ac84'>✔ Ação Recomendada:</span> Avaliar liberação antecipada de recursos seniores para outros projetos (Otimização de Portfólio). Documentar lições aprendidas de eficiência."
+                    insight: "<strong>Alta Performance.</strong> O time está entregando acima do esperado com economia.<br><span style='color:#10ac84'>✔ Ação Recomendada:</span> Documentar lições e otimizar alocação de recursos."
                 }
             },
 
             init: function() {
                 this.loadScenario('realista');
+                // Armazenar referência para uso futuro se necessário
+                window.appInstance = this;
             },
 
             loadScenario: function(type) {
-                // Toggle Visual dos Botões
-                document.querySelectorAll('.sim-controls button').forEach(b => b.classList.remove('active'));
-                document.getElementById(type === 'realista' ? 'btn-real' : type === 'critico' ? 'btn-crit' : 'btn-oti').classList.add('active');
+                // Atualiza visual dos botões (acessibilidade inclusa)
+                const tabs = document.querySelectorAll('.sim-controls button');
+                tabs.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-selected', 'false');
+                });
+
+                const id = type === 'realista' ? 'btn-real' : type === 'critico' ? 'btn-crit' : 'btn-oti';
+                const activeBtn = document.getElementById(id);
+                if (activeBtn) { activeBtn.classList.add('active'); activeBtn.setAttribute('aria-selected', 'true'); }
 
                 const data = this.scenarios[type];
-                
+                if (!data) return;
+
                 this.updateKPIs(data);
                 this.updateTable(data);
                 document.getElementById('diagnostico-texto').innerHTML = data.insight;
@@ -464,79 +367,110 @@
             },
 
             updateKPIs: function(data) {
-                // Encontra o índice da última medição válida (>0)
-                let lastIdx = data.real.reduce((acc, val, idx) => val > 0 ? idx : acc, 0);
-                
-                let currentReal = data.real[lastIdx]; 
-                let currentPlan = data.plan[lastIdx]; 
+                // Encontra índice da última medição reportada (último valor > 0)
+                let lastIdx = -1;
+                for (let i = 0; i < data.real.length; i++) {
+                    if (typeof data.real[i] === 'number' && data.real[i] > 0) lastIdx = i;
+                }
+                if (lastIdx === -1) lastIdx = data.real.length - 1;
+
+                const currentReal = data.real[lastIdx];
+                const currentPlan = data.plan[lastIdx] || 1;
 
                 // 1. Avanço Físico
-                document.getElementById('kpi-fisico').innerText = currentReal + "%";
+                document.getElementById('kpi-fisico').innerText = (Number.isFinite(currentReal) ? currentReal : 0) + "%";
 
-                // 2. SPI (Eficiência Acumulada)
-                let spi = (currentPlan > 0 ? currentReal / currentPlan : 1).toFixed(2);
-                
+                // 2. SPI (Eficiência acumulada)
+                let spi = currentPlan > 0 ? (currentReal / currentPlan) : 1;
+                if (!isFinite(spi) || isNaN(spi)) spi = 1;
+                spi = Number(spi).toFixed(2);
                 const spiEl = document.getElementById('kpi-spi');
                 spiEl.innerText = spi;
-                spiEl.style.color = spi < 0.85 ? '#d63031' : spi >= 1 ? '#10ac84' : '#feca57';
-                
-                let badgeSpi = document.querySelector('#badge-spi-container .badge');
-                badgeSpi.className = `badge ${spi < 0.85 ? 'bg-red' : spi >= 1 ? 'bg-green' : 'bg-blue'}`;
-                badgeSpi.innerText = spi < 0.85 ? 'ATRASADO' : spi >= 1 ? 'ADIANTADO' : 'ATENÇÃO';
+                // cor do texto
+                spiEl.style.color = (spi < 0.85 ? '#d63031' : spi >= 1 ? '#10ac84' : '#feca57');
 
-                // 3. CPI (Custo) - Média dos períodos reportados
-                let validCPIs = data.custoCPI.filter(c => c > 0);
-                let avgCPI = validCPIs.length ? (validCPIs.reduce((a,b)=>a+b,0) / validCPIs.length).toFixed(2) : "1.00";
-                
+                // badge SPI
+                const badgeSpi = document.getElementById('badge-spi');
+                if (badgeSpi) {
+                    badgeSpi.className = 'badge ' + (spi < 0.85 ? 'bg-red' : spi >= 1 ? 'bg-green' : 'bg-blue');
+                    badgeSpi.innerText = spi < 0.85 ? 'ATRASADO' : spi >= 1 ? 'ADIANTADO' : 'ATENÇÃO';
+                }
+
+                // 3. CPI (média dos períodos válidos)
+                const validCPIs = Array.isArray(data.custoCPI) ? data.custoCPI.filter(v => typeof v === 'number' && v > 0) : [];
+                let avgCPI = validCPIs.length ? (validCPIs.reduce((a,b)=>a+b,0) / validCPIs.length) : 1;
+                avgCPI = Number(avgCPI).toFixed(2);
                 const cpiEl = document.getElementById('kpi-cpi');
                 cpiEl.innerText = avgCPI;
-                cpiEl.style.color = avgCPI < 0.9 ? '#d63031' : '#10ac84';
-                
-                // 4. Riscos
-                let criticos = data.riscos.filter(r => (r.p * r.i) >= 12).length;
+                cpiEl.style.color = (avgCPI < 0.9 ? '#d63031' : '#10ac84');
+
+                const badgeCpi = document.getElementById('badge-cpi');
+                if (badgeCpi) {
+                    badgeCpi.className = 'badge ' + (avgCPI < 0.9 ? 'bg-red' : 'bg-green');
+                    badgeCpi.innerText = avgCPI < 0.9 ? 'SOBRECUSTO' : 'DENTRO';
+                }
+
+                // 4. Riscos críticos (score >= 12)
+                const criticos = Array.isArray(data.riscos) ? data.riscos.filter(r => (r.p * r.i) >= 12).length : 0;
                 document.getElementById('kpi-riscos').innerText = criticos;
             },
 
             updateTable: function(data) {
                 const tbody = document.querySelector('#tabela-evm tbody');
                 tbody.innerHTML = '';
-                
-                data.fases.forEach((fase, i) => {
-                    if(data.plan[i] === 100 && data.real[i] === 0 && i === 4) return; 
 
-                    const spi = data.plan[i] > 0 ? (data.real[i] / data.plan[i]) : 1;
-                    const cpi = data.custoCPI[i] || 1;
-                    const riskScore = data.riscos[i].p * data.riscos[i].i;
+                const fases = Array.isArray(data.fases) && data.fases.length ? data.fases :
+                    ['Iniciação','Planejamento','Execução','Monitoramento','Encerramento'];
 
-                    let statusIcon = spi >= 1 ? '<i class="fas fa-check-circle" style="color:var(--success)"></i>' :
-                                      spi > 0.8 ? '<i class="fas fa-exclamation-circle" style="color:var(--warning)"></i>' :
-                                      '<i class="fas fa-times-circle" style="color:var(--danger)"></i>';
+                for (let i = 0; i < data.plan.length; i++) {
+                    // preserva regra original: se encerrar 100% planejado mas sem medição, pule
+                    if (data.plan[i] === 100 && data.real[i] === 0 && i === data.plan.length - 1) continue;
 
-                    let row = `
-                        <tr>
-                            <td>${fase}</td>
-                            <td>${data.plan[i]}%</td>
-                            <td>${data.real[i]}%</td>
-                            <td>${statusIcon} ${spi.toFixed(2)}</td>
-                            <td style="color:${cpi < 1 ? 'red':'green'}">${cpi.toFixed(2)}</td>
-                            <td>
-                                <div style="display:flex; align-items:center; gap:5px;">
-                                    <div style="width:30px; height:6px; background:#e0e0e0; border-radius:3px;">
-                                        <div style="width:${(riskScore/25)*100}%; height:100%; background:${riskScore>12?'red':riskScore>6?'orange':'green'}; border-radius:3px;"></div>
-                                    </div>
-                                    <small>${riskScore}</small>
+                    const planned = Number.isFinite(data.plan[i]) ? data.plan[i] : 0;
+                    const realized = Number.isFinite(data.real[i]) ? data.real[i] : 0;
+                    const spi = planned > 0 ? (realized / planned) : 1;
+                    const spiTxt = isFinite(spi) ? spi.toFixed(2) : '1.00';
+                    const cpi = (Array.isArray(data.custoCPI) && Number.isFinite(data.custoCPI[i])) ? data.custoCPI[i] : 1;
+                    const cpiTxt = Number(cpi).toFixed(2);
+                    const riskScore = (data.riscos && data.riscos[i]) ? (data.riscos[i].p * data.riscos[i].i) : 0;
+
+                    // icon status
+                    let statusIcon = '';
+                    if (spi >= 1) statusIcon = `<i class="fas fa-check-circle" style="color:${'#10ac84'}" aria-hidden="true"></i>`;
+                    else if (spi > 0.8) statusIcon = `<i class="fas fa-exclamation-circle" style="color:${'#feca57'}" aria-hidden="true"></i>`;
+                    else statusIcon = `<i class="fas fa-times-circle" style="color:${'#d63031'}" aria-hidden="true"></i>`;
+
+                    // risk bar color
+                    let riskColor = '#28a745'; // green
+                    if (riskScore >= 12) riskColor = '#e74c3c';
+                    else if (riskScore > 6) riskColor = '#f39c12';
+
+                    const riskPercent = Math.min(100, Math.round((riskScore / 25) * 100));
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${fases[i] || ('Fase ' + (i+1))}</td>
+                        <td>${planned}%</td>
+                        <td>${realized}%</td>
+                        <td>${statusIcon} ${spiTxt}</td>
+                        <td style="color:${cpi < 1 ? 'red':'green'}">${cpiTxt}</td>
+                        <td>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <div class="risk-bar" aria-hidden="true">
+                                    <i style="width:${riskPercent}%; background:${riskColor};"></i>
                                 </div>
-                            </td>
-                        </tr>
+                                <small style="color:var(--text-muted)">${riskScore}</small>
+                            </div>
+                        </td>
                     `;
-                    tbody.innerHTML += row;
-                });
+                    tbody.appendChild(row);
+                }
             },
 
             renderCharts: function(data) {
-                // CHART 1: Curva S + Forecast
+                // ========= Curva S + Forecast =========
                 const ctxS = document.getElementById('chartCurvaS').getContext('2d');
-                if(this.charts.sCurve) this.charts.sCurve.destroy();
+                if (this.charts.sCurve) this.charts.sCurve.destroy();
 
                 this.charts.sCurve = new Chart(ctxS, {
                     type: 'line',
@@ -548,27 +482,30 @@
                                 data: data.plan,
                                 borderColor: '#1f5fa3',
                                 backgroundColor: 'transparent',
-                                borderDash: [5, 5],
+                                borderDash: [6,6],
                                 borderWidth: 2,
-                                tension: 0.4
+                                tension: 0.38,
+                                pointRadius: 4,
+                                pointHoverRadius:6
                             },
                             {
                                 label: 'Realizado',
                                 data: data.real,
                                 borderColor: '#10ac84',
-                                backgroundColor: 'rgba(16, 172, 132, 0.1)',
+                                backgroundColor: 'rgba(16,172,132,0.08)',
                                 borderWidth: 3,
                                 fill: true,
-                                tension: 0.4
+                                tension: 0.38,
+                                pointRadius: 5
                             },
                             {
                                 label: 'Tendência (Forecast)',
                                 data: data.forecast,
                                 borderColor: '#636e72',
-                                borderDash: [2, 2],
+                                borderDash: [3,3],
                                 borderWidth: 2,
                                 pointRadius: 0,
-                                tension: 0.4
+                                tension: 0.38
                             }
                         ]
                     },
@@ -576,22 +513,33 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: { position: 'top' },
-                            tooltip: { mode: 'index', intersect: false }
+                            legend: { position: 'top', labels: { boxWidth:12, boxHeight:6 } },
+                            tooltip: { mode: 'index', intersect: false, callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.parsed.y}%`;
+                                }
+                            } }
                         },
-                        interaction: { mode: 'nearest', axis: 'x', intersect: false }
+                        interaction: { mode: 'nearest', axis: 'x', intersect: false },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                suggestedMax: 110,
+                                title: { display: true, text: 'Avanço (%)' }
+                            }
+                        }
                     }
                 });
 
-                // CHART 2: Riscos Bubble
+                // ========= Riscos (Bubble) =========
                 const ctxR = document.getElementById('chartRiscos').getContext('2d');
-                if(this.charts.risk) this.charts.risk.destroy();
+                if (this.charts.risk) this.charts.risk.destroy();
 
-                const riskData = data.riscos.map((r, i) => ({
-                    x: r.p, 
-                    y: r.i, 
-                    r: (r.p * r.i) + 5,
-                    label: data.fases[i]
+                const riskData = (data.riscos || []).map((r, i) => ({
+                    x: r.p,
+                    y: r.i,
+                    r: Math.max(6, (r.p * r.i) + 4),
+                    label: data.fases[i] || ('Fase ' + (i+1))
                 }));
 
                 this.charts.risk = new Chart(ctxR, {
@@ -600,35 +548,42 @@
                         datasets: [{
                             label: 'Riscos por Fase',
                             data: riskData,
-                            backgroundColor: (ctx) => {
-                                const val = ctx.raw ? (ctx.raw.x * ctx.raw.y) : 0;
-                                return val >= 12 ? 'rgba(231, 76, 60, 0.7)' : val >= 6 ? 'rgba(241, 196, 15, 0.7)' : 'rgba(46, 204, 113, 0.7)';
+                            backgroundColor: function(ctx) {
+                                const raw = ctx.raw || {};
+                                const val = (raw.x || 0) * (raw.y || 0);
+                                if (val >= 12) return 'rgba(231,76,60,0.75)';
+                                if (val >= 6)  return 'rgba(241,196,15,0.75)';
+                                return 'rgba(46,204,113,0.75)';
                             },
-                            borderColor: '#fff'
+                            borderColor: '#ffffff'
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
                         scales: {
-                            x: { min: 0, max: 6, title: {display:true, text:'Probabilidade'} },
-                            y: { min: 0, max: 6, title: {display:true, text:'Impacto'} }
+                            x: { min: 0, max: 6, title: { display:true, text: 'Probabilidade' } },
+                            y: { min: 0, max: 6, title: { display:true, text: 'Impacto' } }
                         },
                         plugins: {
                             tooltip: {
                                 callbacks: {
-                                    label: (ctx) => `${ctx.raw.label}: Sev. ${(ctx.raw.x * ctx.raw.y)}`
+                                    label: function(ctx) {
+                                        const r = ctx.raw || {};
+                                        const sev = (r.x * r.y) || 0;
+                                        return `${r.label}: Prob ${r.x} x Imp ${r.y} → Sev ${sev}`;
+                                    }
                                 }
-                            }
+                            },
+                            legend: { display: false }
                         }
                     }
                 });
             }
         };
 
-        // Inicializa o app
-        window.onload = () => app.init();
-
+        // Inicializa o app ao carregar a janela
+        window.addEventListener('load', function(){ app.init(); });
     </script>
 </body>
 </html>

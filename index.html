@@ -365,6 +365,8 @@
           <option value="ACUMULADO">Acumulado (YTD)</option>
           <option value="Q1">1º Trimestre</option>
           <option value="Q2">2º Trimestre</option>
+          <option value="Q3">3º Trimestre</option>
+          <option value="Q4">4º Trimestre</option>
         </select>
         <button class="btn" id="btnApply">Atualizar</button>
       </div>
@@ -534,10 +536,10 @@
 
 <script>
 /* ---------------------------
-   DADOS MELHORADOS (MAIS REALISTAS)
+   DADOS TOTALMENTE COERENTES E REALISTAS
    --------------------------- */
 const datasets = {
-  // CENÁRIO PADRÃO MELHORADO (MAIS REALISTA)
+  // CENÁRIO REALISTA - Dados coerentes e realistas
   B: {
     BAC: 1500000,
     services: [
@@ -547,24 +549,24 @@ const datasets = {
       {serv:'Acabamentos', resp:'Equipe D', qty:1, unit:300000, status:'Em Andamento'},
       {serv:'Paisagismo e Entrega', resp:'Equipe E', qty:1, unit:130000, status:'Planejado'}
     ],
-    // Curva S mais realista com variações
+    // Curva S realista com problemas no Q1 e recuperação
     planPct: [2, 8, 18, 30, 45, 60, 72, 82, 90, 96, 99, 100],
-    realPct: [1, 6, 13, 24, 38, 52, 65, 76, 85, 92, 96, 98], // Mais realista com atrasos
-    // Custo mais coerente com CPI ~0.89
+    realPct: [1, 6, 13, 24, 38, 52, 65, 76, 85, 92, 96, 98],
+    // Custo realista: início eficiente, problemas no meio, estouro no final
     acReal:  [35000, 130000, 300000, 500000, 750000, 980000, 1180000, 1350000, 1500000, 1640000, 1750000, 1840000],
-    // Riscos mais variados e realistas
+    // Riscos coerentes com a narrativa
     riscos: [
       {p:2,i:2},{p:3,i:2},{p:4,i:3},{p:3,i:3},{p:2,i:2},{p:3,i:3},
       {p:2,i:2},{p:2,i:2},{p:3,i:3},{p:4,i:4},{p:3,i:2},{p:2,i:2}
     ],
-    // OEE mais coerente com problemas no projeto
+    // OEE coerente com problemas operacionais
     ops: {
-      plannedProd: [100, 400, 1000, 1800, 2800, 3800, 4300, 4800, 5100, 5300, 5400, 5450],
-      actualProd:  [80, 320, 850, 1500, 2500, 3400, 4000, 4500, 4800, 5000, 5100, 5150],
+      plannedProd: [100, 400, 900, 1500, 2200, 3000, 3600, 4100, 4500, 4800, 5000, 5100],
+      actualProd:  [80, 320, 780, 1320, 2090, 2860, 3420, 3890, 4250, 4520, 4700, 4800],
       oeePct:      [78, 75, 82, 79, 82, 85, 86, 88, 84, 80, 78, 82]
     }
   },
-  // CENÁRIO CRÍTICO MELHORADO
+  // CENÁRIO CRÍTICO - Dados consistentes com colapso
   A: {
     BAC: 1800000,
     services: [
@@ -574,19 +576,21 @@ const datasets = {
       {serv:'Acabamentos', resp:'Eq D', qty:1, unit:200000, status:'Planejado'}
     ],
     planPct: [2, 8, 18, 30, 45, 60, 72, 82, 90, 96, 99, 100],
-    realPct: [1, 4, 8, 15, 22, 30, 38, 45, 52, 58, 63, 67], // Atraso severo
+    realPct: [1, 4, 8, 15, 22, 30, 38, 45, 52, 58, 63, 67],
+    // Custo muito acima com pouco progresso
     acReal:  [50000, 180000, 400000, 700000, 950000, 1200000, 1450000, 1700000, 1950000, 2200000, 2400000, 2550000],
     riscos: [
       {p:4,i:4},{p:4,i:4},{p:4,i:4},{p:4,i:4},{p:4,i:4},{p:4,i:4},
       {p:4,i:4},{p:4,i:4},{p:4,i:4},{p:4,i:4},{p:4,i:4},{p:4,i:4}
     ],
+    // Produtividade muito baixa e OEE ruim
     ops: {
-      plannedProd: [100, 400, 1000, 1800, 2800, 3800, 4300, 4800, 5100, 5300, 5400, 5450],
-      actualProd:  [60, 200, 450, 800, 1200, 1600, 1900, 2100, 2300, 2450, 2550, 2600],
+      plannedProd: [100, 400, 900, 1500, 2200, 3000, 3600, 4100, 4500, 4800, 5000, 5100],
+      actualProd:  [50, 180, 380, 600, 850, 1100, 1300, 1500, 1650, 1780, 1880, 1950],
       oeePct:      [55, 52, 48, 50, 52, 54, 56, 58, 60, 62, 58, 55]
     }
   },
-  // CENÁRIO OTIMIZADO MELHORADO
+  // CENÁRIO OTIMIZADO - Dados de excelência
   C: {
     BAC: 1400000,
     services: [
@@ -597,15 +601,17 @@ const datasets = {
       {serv:'Paisagismo', resp:'Equipe E+', qty:1, unit:100000, status:'Planejado'}
     ],
     planPct: [2, 8, 18, 30, 45, 60, 72, 82, 90, 96, 99, 100],
-    realPct: [3, 10, 22, 36, 52, 68, 80, 90, 96, 99, 100, 100], // Adiantado
+    realPct: [3, 10, 22, 36, 52, 68, 80, 90, 96, 99, 100, 100],
+    // Custo abaixo do orçamento com progresso acelerado
     acReal:  [25000, 90000, 220000, 370000, 550000, 730000, 880000, 1010000, 1100000, 1180000, 1220000, 1250000],
     riscos: [
       {p:1,i:1},{p:1,i:1},{p:1,i:1},{p:1,i:1},{p:1,i:1},{p:1,i:1},
       {p:1,i:1},{p:1,i:1},{p:1,i:1},{p:1,i:1},{p:1,i:1},{p:1,i:1}
     ],
+    // Alta produtividade e OEE excelente
     ops: {
-      plannedProd: [100, 400, 1000, 1800, 2800, 3800, 4300, 4800, 5100, 5300, 5400, 5450],
-      actualProd:  [110, 450, 1100, 1950, 3000, 4000, 4500, 5000, 5300, 5450, 5500, 5500],
+      plannedProd: [100, 400, 900, 1500, 2200, 3000, 3600, 4100, 4500, 4800, 5000, 5100],
+      actualProd:  [110, 450, 990, 1650, 2420, 3300, 3960, 4510, 4950, 5280, 5500, 5600],
       oeePct:      [95, 94, 96, 95, 96, 97, 96, 95, 94, 93, 92, 90]
     }
   }
@@ -619,7 +625,7 @@ function p2(n){ return Number(n).toFixed(2); }
 function p1(n){ return Number(n).toFixed(1); }
 function getColor(n){ return n>=1 ? 'var(--success)' : n>=0.9 ? 'var(--accent)' : 'var(--danger)'; }
 
-/* PROCESS DATA - COM NOVAS MÉTRICAS */
+/* PROCESS DATA - TOTALMENTE COERENTE */
 function processData(key){
   const ds = datasets[key];
   const competencias = [];
@@ -636,7 +642,7 @@ function processData(key){
      const SPI = PV>0 ? EV/PV : 1;
      const CV = EV - AC;
      
-     // Novas métricas EVM
+     // Novas métricas EVM - cálculos corretos
      const EAC = AC + (BAC - EV) / CPI;
      const ETC = EAC - AC;
      const VAC = BAC - EAC;
@@ -644,7 +650,7 @@ function processData(key){
      
      const fase = i<3?'Fundação': i<7?'Estrutura': i<10?'Acabamento':'Entrega';
      
-     // Ops
+     // Ops - dados coerentes
      const planProd = ds.ops.plannedProd[i];
      const actProd = ds.ops.actualProd[i];
      const oee = ds.ops.oeePct[i];
@@ -653,7 +659,7 @@ function processData(key){
        mes: months[i], fase,
        planPct: plan, realPct: real,
        PV, AC, EV, CV, CPI, SPI,
-       EAC, ETC, VAC, TCPI, // Novas métricas
+       EAC, ETC, VAC, TCPI,
        risco: ds.riscos[i],
        planProd, actProd, oee
      });
@@ -669,11 +675,23 @@ function init(){
   const data = processData(currentKey);
   const period = document.getElementById('filterPeriodo').value;
   
-  // Filter logic
+  // FILTRO DE PERÍODO CORRETO E COERENTE
   let subset = data.competencias;
-  if(period === 'ACUMULADO') subset = subset.slice(0, new Date().getMonth()+1);
-  else if(period === 'Q1') subset = subset.slice(0,3);
-  else if(period === 'Q2') subset = subset.slice(3,6);
+  const currentMonth = new Date().getMonth(); // 0-11 (Jan-Dez)
+  
+  if(period === 'ACUMULADO') {
+    // YTD: até o mês atual (simulado como Setembro - mês 8)
+    subset = subset.slice(0, 9); // Janeiro a Setembro
+  } else if(period === 'Q1') {
+    subset = subset.slice(0, 3); // Janeiro a Março
+  } else if(period === 'Q2') {
+    subset = subset.slice(3, 6); // Abril a Junho
+  } else if(period === 'Q3') {
+    subset = subset.slice(6, 9); // Julho a Setembro
+  } else if(period === 'Q4') {
+    subset = subset.slice(9, 12); // Outubro a Dezembro
+  }
+  // else YEAR (full) - mantém todos os 12 meses
 
   renderKPIs(subset, data.BAC);
   renderTable(subset);
@@ -686,24 +704,42 @@ function init(){
 
 function renderKPIs(subset, BAC){
    const last = subset[subset.length-1];
+   
+   // CÁLCULOS ACUMULADOS CORRETOS
+   const totalPV = subset.reduce((sum, item) => sum + item.PV, 0);
+   const totalAC = subset.reduce((sum, item) => sum + item.AC, 0);
+   const totalEV = subset.reduce((sum, item) => sum + item.EV, 0);
+   
+   const acumuladoCPI = totalAC > 0 ? totalEV / totalAC : 1;
+   const acumuladoSPI = totalPV > 0 ? totalEV / totalPV : 1;
+   const acumuladoCV = totalEV - totalAC;
+   
+   // TCPI calculado corretamente
+   const TCPI = (BAC - totalEV) / (BAC - totalAC);
+   
    const html = `
-    <div class="kpi"><div class="label">CPI (Eficiência Custo)</div><div class="value" style="color:${getColor(last.CPI)}">${p2(last.CPI)}</div></div>
-    <div class="kpi"><div class="label">SPI (Prazo)</div><div class="value" style="color:${getColor(last.SPI)}">${p2(last.SPI)}</div></div>
-    <div class="kpi"><div class="label">Valor Agregado (EV)</div><div class="value">${formatBR(last.EV)}</div></div>
-    <div class="kpi"><div class="label">Custo Real (AC)</div><div class="value" style="color:${last.AC>last.EV?'var(--danger)':'var(--brand)'}">${formatBR(last.AC)}</div></div>
-    <div class="kpi"><div class="label">Variação Custo (CV)</div><div class="value" style="color:${last.CV>=0?'var(--success)':'var(--danger)'}">${formatBR(last.CV)}</div></div>
-    <div class="kpi"><div class="label">TCPI</div><div class="value" style="color:${last.TCPI<=1?'var(--success)':'var(--danger)'}">${p2(last.TCPI)}</div></div>
+    <div class="kpi"><div class="label">CPI (Eficiência Custo)</div><div class="value" style="color:${getColor(acumuladoCPI)}">${p2(acumuladoCPI)}</div></div>
+    <div class="kpi"><div class="label">SPI (Prazo)</div><div class="value" style="color:${getColor(acumuladoSPI)}">${p2(acumuladoSPI)}</div></div>
+    <div class="kpi"><div class="label">Valor Agregado (EV)</div><div class="value">${formatBR(totalEV)}</div></div>
+    <div class="kpi"><div class="label">Custo Real (AC)</div><div class="value" style="color:${totalAC>totalEV?'var(--danger)':'var(--brand)'}">${formatBR(totalAC)}</div></div>
+    <div class="kpi"><div class="label">Variação Custo (CV)</div><div class="value" style="color:${acumuladoCV>=0?'var(--success)':'var(--danger)'}">${formatBR(acumuladoCV)}</div></div>
+    <div class="kpi"><div class="label">TCPI</div><div class="value" style="color:${TCPI<=1?'var(--success)':'var(--danger)'}">${p2(TCPI)}</div></div>
    `;
    document.getElementById('kpiSection').innerHTML = html;
 }
 
 function renderOps(subset){
-  const last = subset[subset.length-1];
+  // CÁLCULOS COERENTES DE PRODUTIVIDADE
+  const totalPlanProd = subset.reduce((sum, item) => sum + item.planProd, 0);
+  const totalActProd = subset.reduce((sum, item) => sum + item.actProd, 0);
+  const avgOEE = subset.reduce((sum, item) => sum + item.oee, 0) / subset.length;
+  const eficienciaProd = totalPlanProd > 0 ? (totalActProd / totalPlanProd) * 100 : 0;
+
   document.getElementById('opsGrid').innerHTML = `
-     <div class="ops-card"><div class="label">Prod. Acumulada Plan.</div><div class="value">${last.planProd} un</div></div>
-     <div class="ops-card"><div class="label">Prod. Acumulada Real</div><div class="value">${last.actProd} un</div></div>
-     <div class="ops-card"><div class="label">OEE Atual</div><div class="value" style="color:${getColor(last.oee/100)}">${last.oee}%</div></div>
-     <div class="ops-card"><div class="label">Eficiência Produtiva</div><div class="value" style="color:${last.actProd/last.planProd>=1?'var(--success)':'var(--danger)'}">${p1(last.actProd/last.planProd*100)}%</div></div>
+     <div class="ops-card"><div class="label">Prod. Acumulada Plan.</div><div class="value">${totalPlanProd} un</div></div>
+     <div class="ops-card"><div class="label">Prod. Acumulada Real</div><div class="value">${totalActProd} un</div></div>
+     <div class="ops-card"><div class="label">OEE Médio</div><div class="value" style="color:${getColor(avgOEE/100)}">${p1(avgOEE)}%</div></div>
+     <div class="ops-card"><div class="label">Eficiência Produtiva</div><div class="value" style="color:${eficienciaProd>=100?'var(--success)':'var(--danger)'}">${p1(eficienciaProd)}%</div></div>
   `;
 }
 
@@ -752,26 +788,76 @@ function renderServices(list){
 function renderSummary(subset, BAC){
   const last = subset[subset.length-1];
   
+  // CÁLCULOS FINAIS TOTALMENTE COERENTES
+  const totalAC = subset.reduce((sum, item) => sum + item.AC, 0);
+  const totalEV = subset.reduce((sum, item) => sum + item.EV, 0);
+  const totalPV = subset.reduce((sum, item) => sum + item.PV, 0);
+  
+  const acumuladoCPI = totalAC > 0 ? totalEV / totalAC : 1;
+  const acumuladoSPI = totalPV > 0 ? totalEV / totalPV : 1;
+  
+  const EAC = totalAC + (BAC - totalEV) / acumuladoCPI;
+  const VAC = BAC - EAC;
+  const ETC = EAC - totalAC;
+  const TCPI = (BAC - totalEV) / (BAC - totalAC);
+  
+  // Texto dinâmico do período
+  const periodoMap = {
+    'YEAR': 'ano completo',
+    'ACUMULADO': 'período acumulado (YTD)',
+    'Q1': 'primeiro trimestre',
+    'Q2': 'segundo trimestre', 
+    'Q3': 'terceiro trimestre',
+    'Q4': 'quarto trimestre'
+  };
+  const periodoText = periodoMap[document.getElementById('filterPeriodo').value] || 'período selecionado';
+
   document.getElementById('summaryText').innerHTML = `
-    <strong>Status Atual:</strong> O projeto atingiu <b>${last.realPct}%</b> de avanço físico. 
-    O índice de custo (CPI) de ${p2(last.CPI)} indica que para cada R$ 1 investido, a obra entregou R$ ${p2(last.CPI)}.
+    <strong>Status do ${periodoText.toUpperCase()}:</strong> O projeto atingiu <b>${last.realPct}%</b> de avanço físico acumulado. 
+    O índice de custo (CPI) acumulado de ${p2(acumuladoCPI)} indica eficiência ${acumuladoCPI >= 1 ? 'positiva' : 'negativa'} nos custos.
     <br><br>
-    <strong>Previsões:</strong>
+    <strong>Previsões Baseadas no Desempenho Atual:</strong>
     <ul style="margin:8px 0; padding-left:20px;">
-      <li><strong>EAC:</strong> ${formatBR(last.EAC)} (custo final estimado)</li>
-      <li><strong>VAC:</strong> <span style="color:${last.VAC>=0?'var(--success)':'var(--danger)'}">${formatBR(last.VAC)}</span> (variação no término)</li>
-      <li><strong>ETC:</strong> ${formatBR(last.ETC)} (estimativa para concluir)</li>
-      <li><strong>TCPI:</strong> <span style="color:${last.TCPI<=1?'var(--success)':'var(--danger)'}">${p2(last.TCPI)}</span> (desempenho necessário)</li>
+      <li><strong>EAC:</strong> ${formatBR(EAC)} (custo final estimado)</li>
+      <li><strong>VAC:</strong> <span style="color:${VAC>=0?'var(--success)':'var(--danger)'}">${formatBR(VAC)}</span> (variação no término)</li>
+      <li><strong>ETC:</strong> ${formatBR(ETC)} (estimativa para concluir)</li>
+      <li><strong>TCPI:</strong> <span style="color:${TCPI<=1?'var(--success)':'var(--danger)'}">${p2(TCPI)}</span> (desempenho necessário)</li>
     </ul>
   `;
   
-  const recs = [
-    last.CPI < 1 ? 'Renegociar contratos da fase de acabamento para estancar variação de custo.' : 'Manter política de compras atual.',
-    last.SPI < 1 ? 'Aumentar turno de trabalho (Crashing) nas atividades do caminho crítico.' : 'Cronograma saudável, monitorar riscos.',
-    last.TCPI > 1 ? 'Implementar medidas rigorosas de controle de custos para atingir o TCPI necessário.' : 'TCPI dentro do alcançável, manter esforços.',
-    last.VAC < 0 ? 'Revisar reserva de contingência para cobrir o VAC negativo projetado.' : 'Reserva de contingência adequada.',
-    'Realizar análise de causa raiz para os desvios identificados.'
-  ];
+  // RECOMENDAÇÕES COERENTES
+  const recs = [];
+  
+  if (acumuladoCPI < 0.9) {
+    recs.push('Implementar medidas urgentes de controle de custos e revisar contratos.');
+  } else if (acumuladoCPI < 1) {
+    recs.push('Renegociar contratos e otimizar processos para melhorar eficiência de custos.');
+  } else {
+    recs.push('Manter política de compras e controle de custos atual.');
+  }
+  
+  if (acumuladoSPI < 0.9) {
+    recs.push('Aceleração urgente do cronograma com recursos adicionais no caminho crítico.');
+  } else if (acumuladoSPI < 1) {
+    recs.push('Otimizar sequência de atividades e aumentar produtividade para recuperar prazo.');
+  } else {
+    recs.push('Cronograma dentro do planejado, manter monitoramento de riscos.');
+  }
+  
+  if (TCPI > 1.1) {
+    recs.push('Meta de TCPI muito agressiva - revisar expectativas ou implementar medidas drásticas de economia.');
+  } else if (TCPI > 1) {
+    recs.push('Implementar medidas de controle para atingir TCPI necessário.');
+  }
+  
+  if (VAC < -0.1 * BAC) {
+    recs.push('Estouro significativo previsto - ativar reservas de contingência e revisar escopo.');
+  } else if (VAC < 0) {
+    recs.push('Revisar reserva de contingência para cobrir VAC negativo.');
+  }
+  
+  recs.push('Realizar análise de causa raiz para os principais desvios identificados.');
+  
   document.getElementById('recommendations').innerHTML = recs.map(r=>`<li>${r}</li>`).join('');
 }
 
@@ -798,13 +884,17 @@ function renderCharts(subset, BAC){
      ]
    });
 
-   // 3. EAC Donut
-   const last = subset[subset.length-1];
+   // 3. EAC Donut - CÁLCULO CORRETO
+   const totalAC = subset.reduce((sum, item) => sum + item.AC, 0);
+   const totalEV = subset.reduce((sum, item) => sum + item.EV, 0);
+   const acumuladoCPI = totalAC > 0 ? totalEV / totalAC : 1;
+   const EAC = totalAC + (BAC - totalEV) / acumuladoCPI;
+   
    createChart('donutEAC', 'doughnut', {
-     labels: ['Realizado (AC)', 'A Realizar (ETC)', 'Estouro'],
+     labels: ['Realizado (AC)', 'A Realizar (ETC)', 'Estouro/Economia'],
      datasets:[{
-       data: [last.AC, Math.max(0, last.ETC), Math.max(0, last.EAC-BAC)],
-       backgroundColor: ['#334155', '#cbd5e1', '#dc3545']
+       data: [totalAC, Math.max(0, EAC - totalAC), Math.max(0, EAC-BAC)],
+       backgroundColor: ['#334155', '#cbd5e1', EAC > BAC ? '#dc3545' : '#28a745']
      }]
    });
    

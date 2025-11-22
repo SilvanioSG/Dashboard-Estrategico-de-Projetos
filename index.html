@@ -46,19 +46,47 @@
   header .title{font-weight:500;font-size:1rem;opacity: 0.9;}
   header .subtitle{font-size:0.8rem;opacity:0.75; margin-top: 2px;}
 
-  /* Botão Info no Header */
-  .info-btn {
+  /* Botões no Header */
+  .header-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  
+  .info-btn, .site-btn {
     background: rgba(255,255,255,0.15);
     border: 1px solid rgba(255,255,255,0.2);
     color: white;
-    width: 42px; height: 42px;
     border-radius: 10px;
     cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
     transition: all 0.2s ease;
     flex-shrink: 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
   }
-  .info-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
+  
+  .info-btn {
+    width: 42px; 
+    height: 42px;
+  }
+  
+  .site-btn {
+    padding: 0 16px;
+    height: 42px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  
+  .info-btn:hover, .site-btn:hover { 
+    background: rgba(255,255,255,0.3); 
+    transform: translateY(-2px); 
+  }
+  
   .info-btn svg { width: 24px; height: 24px; stroke-width: 2; }
 
   /* Layout Principal */
@@ -201,9 +229,10 @@
     .container { margin: 16px auto; gap: 12px; }
     .card { padding: 16px; }
     
-    .info-btn { 
-      position: static; 
-      margin-left: auto;
+    .header-actions { 
+      position: absolute; 
+      top: 16px; 
+      right: 16px; 
     }
     
     .kpis { grid-template-columns: repeat(2, 1fr); }
@@ -223,6 +252,11 @@
     #baseTable { font-size: 0.8rem; }
     
     th, td { padding: 6px 8px; }
+    
+    .site-btn {
+      padding: 0 12px;
+      font-size: 0.85rem;
+    }
   }
   
   @media (max-width: 480px) {
@@ -234,10 +268,11 @@
     
     header .head-info { min-width: auto; }
     
-    .info-btn { 
-      position: absolute; 
-      top: 16px; 
-      right: 16px; 
+    .header-actions { 
+      position: static; 
+      margin-top: 10px;
+      width: 100%;
+      justify-content: flex-end;
     }
     
     .container { padding: 0 12px; margin: 12px auto; }
@@ -260,6 +295,11 @@
     .kpi .value { font-size: 1.3rem; }
     
     .card { padding: 12px; }
+    
+    .site-btn {
+      padding: 0 10px;
+      font-size: 0.8rem;
+    }
   }
   
   /* Ajustes para modo paisagem em dispositivos móveis */
@@ -291,11 +331,16 @@
     <div class="title">Dashboard EVM Executivo - Obra Alpha</div>
     <div class="subtitle">PMO Data-Driven • Valor Agregado (EVM) • Gestão de Riscos • Performance</div>
   </div>
-  <button class="info-btn" id="btnInfo" title="Sobre o Projeto" aria-label="Informações do Projeto">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-    </svg>
-  </button>
+  <div class="header-actions">
+    <a href="https://www.silvaniogois.com.br/" target="_blank" class="site-btn" title="Visite meu site">
+      Ir ao Site
+    </a>
+    <button class="info-btn" id="btnInfo" title="Sobre o Projeto" aria-label="Informações do Projeto">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+      </svg>
+    </button>
+  </div>
 </header>
 
 <main class="container" role="main">

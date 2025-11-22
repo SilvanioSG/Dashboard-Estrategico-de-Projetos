@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Painel Executivo — Obra Alpha</title>
+<title>Dashboard EVM Executivo - Obra Alpha | Performance & Gestão</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
@@ -126,12 +126,13 @@
   .modal-overlay.active { display: flex; opacity: 1; }
   .modal-content {
     background: #fff;
-    width: 90%; max-width: 600px;
+    width: 90%; max-width: 700px; max-height: 85vh;
     border-radius: 16px;
     padding: 32px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     position: relative;
     transform: translateY(20px); transition: transform 0.3s ease;
+    overflow-y: auto;
   }
   .modal-overlay.active .modal-content { transform: translateY(0); }
   .modal-close {
@@ -142,6 +143,7 @@
   }
   .modal-body h2 { margin-top: 0; color: var(--brand); font-size: 1.4rem; }
   .modal-body h3 { margin: 20px 0 8px 0; font-size: 1rem; color: var(--text-main); }
+  .modal-body h4 { margin: 15px 0 8px 0; font-size: 0.95rem; }
   .modal-body p { line-height: 1.6; color: #475569; font-size: 0.95rem; margin: 0 0 10px 0; }
   .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; background: #f1f5f9; color: #64748b; font-size: 0.75rem; font-weight: 600; margin-right: 6px; }
 
@@ -210,7 +212,7 @@
     
     th, td { padding: 8px 10px; }
     
-    .modal-content { padding: 24px; }
+    .modal-content { padding: 24px; max-height: 80vh; }
   }
   
   @media (max-width: 600px) {
@@ -240,7 +242,7 @@
     
     .container { padding: 0 12px; margin: 12px auto; }
     
-    .modal-content { padding: 20px 16px; }
+    .modal-content { padding: 20px 16px; max-height: 75vh; }
     
     .modal-body h2 { font-size: 1.2rem; }
   }
@@ -274,7 +276,7 @@
     
     .card { padding: 12px; }
     
-    .modal-content { max-height: 90vh; overflow-y: auto; }
+    .modal-content { max-height: 90vh; }
   }
 </style>
 </head>
@@ -286,8 +288,8 @@
   </div>
   <div class="head-info">
     <h1 class="user-name">Silvanio Gois</h1>
-    <div class="title">Painel Executivo — Obra Alpha</div>
-    <div class="subtitle">PMO Data-Driven • GVA (EVM) • Risco • Performance</div>
+    <div class="title">Dashboard EVM Executivo - Obra Alpha</div>
+    <div class="subtitle">PMO Data-Driven • Valor Agregado (EVM) • Gestão de Riscos • Performance</div>
   </div>
   <button class="info-btn" id="btnInfo" title="Sobre o Projeto" aria-label="Informações do Projeto">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -300,13 +302,13 @@
   <section class="card" style="border-left: 5px solid var(--brand);">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
       <div>
-        <h2 style="margin:0; font-size:1.25rem; color:var(--brand-dark)">Panorama de Performance</h2>
+        <h2 style="margin:0; font-size:1.25rem; color:var(--brand-dark)">Análise de Performance Integrada</h2>
         <div style="color:var(--muted); font-size: 0.9rem; margin-top:4px;">
-          Análise integrada de <strong>Valor Agregado (EVM)</strong> e eficiência operacional.
+          Monitoramento em tempo real do <strong>Valor Agregado (EVM)</strong> com indicadores de eficiência operacional e gestão de riscos.
         </div>
       </div>
       <div class="filters">
-        <label for="scenarioSelect" style="font-weight:600;color:var(--muted);font-size:0.85rem">Cenário de Dados:</label>
+        <label for="scenarioSelect" style="font-weight:600;color:var(--muted);font-size:0.85rem">Cenário:</label>
         <select id="scenarioSelect">
           <option value="B">Estudo Realista (Padrão)</option>
           <option value="A">Cenário Crítico</option>
@@ -360,10 +362,12 @@
     </div>
 
     <div class="card">
-      <h4 style="margin-top:0">Mapa de Riscos (P x I)</h4>
+      <h4 style="margin-top:0">Mapa de Riscos (Probabilidade x Impacto)</h4>
       <div style="min-height:200px"><canvas id="riskChart"></canvas></div>
       <div style="margin-top:8px;color:var(--muted);font-size:0.85rem; text-align:center">
-        <span style="color:var(--danger)">● Alto</span> <span style="color:var(--accent)">● Médio</span> <span style="color:var(--success)">● Baixo</span>
+        <span style="color:var(--danger)">● Alto (≥12)</span> 
+        <span style="color:var(--accent)">● Médio (6-11)</span> 
+        <span style="color:var(--success)">● Baixo (≤5)</span>
       </div>
 
       <hr style="border:0; border-top:1px solid #eee; margin:20px 0">
@@ -412,42 +416,83 @@
 </main>
 
 <footer>
-  © 2025 Silvanio Gois - Todos os direitos reservados
+  © 2025 Silvanio Gois - Dashboard Executivo EVM | Todos os direitos reservados
 </footer>
 
 <div class="modal-overlay" id="infoModal">
   <div class="modal-content">
     <button class="modal-close" id="btnCloseModal">&times;</button>
     <div class="modal-body">
-      <div><span class="tag">Portfólio</span> <span class="tag">PMO</span> <span class="tag">Análise de Cenários</span></div>
-      <h2>Sobre este Dashboard</h2>
+      <div>
+        <span class="tag">Portfólio</span> 
+        <span class="tag">PMO</span> 
+        <span class="tag">EVM</span>
+        <span class="tag">Análise de Cenários</span>
+      </div>
+      <h2>Sobre este Dashboard Executivo</h2>
       
-      <h3>1. O Contexto (Obra Alpha)</h3>
-      <p>Simulação de um empreendimento de R$ 1.5M. O painel utiliza <strong>EVM (Earned Value Management)</strong> para cruzar avanço físico e financeiro.</p>
-      
-      <h3>2. A Narrativa dos Dados (Cenário Padrão)</h3>
-      <p>No estudo principal, a obra sofreu atrasos iniciais (Q1) e recuperou o prazo no meio do ano, mas ao custo de estourar o orçamento na fase final (AC > PV).</p>
+      <h3>1. Contexto e Metodologia</h3>
+      <p>Simulação de um empreendimento utilizando <strong>EVM (Earned Value Management)</strong> - metodologia que integra escopo, prazo e custos para medir performance real do projeto.</p>
+      <p><strong>Orçamento Base:</strong> R$ 1.5M (varia conforme cenário)</p>
 
-      <h3>3. Estudos de Caso Disponíveis</h3>
-      <p>Este dashboard permite alternar entre três visões estratégicas (menu superior):</p>
-      <ul style="padding-left: 20px; margin: 0; color: #475569; font-size: 0.9rem; line-height: 1.6;">
-        <li><strong>Estudo Realista (Padrão):</strong> O cenário base auditado, com problemas reais de gestão e recuperação custosa.</li>
-        <li><strong>Estudo Otimizado:</strong> Simula uma execução de alta performance (CPI > 1.0), com economia de recursos e entrega antecipada.</li>
-        <li><strong>Estudo Crítico:</strong> Simula um colapso operacional, com atrasos graves e estouro orçamentário desde o início.</li>
-      </ul>
+      <h3>2. Cenários Disponíveis</h3>
       
+      <h4 style="color: var(--brand); margin: 15px 0 8px 0;">🏗️ Cenário Realista (Padrão)</h4>
+      <p><strong>Valor:</strong> R$ 1.500.000 | <strong>Duração:</strong> 12 meses</p>
+      <p><strong>Narrativa:</strong> Projeto com desafios típicos de construção civil:</p>
+      <ul style="padding-left: 20px; margin: 8px 0; color: #475569; font-size: 0.9rem; line-height: 1.5;">
+        <li><strong>Q1:</strong> Atrasos em licenciamento ambiental e chuvas</li>
+        <li><strong>Q2-Q3:</strong> Escassez de materiais e mão-de-obra especializada</li>
+        <li><strong>Q4:</strong> Aceleração custosa para mitigar atrasos</li>
+      </ul>
+      <p><strong>Resultado:</strong> CPI 0.89 (estouro de custo) | SPI 0.98 (atraso leve)</p>
+
+      <h4 style="color: var(--danger); margin: 15px 0 8px 0;">🚨 Cenário Crítico</h4>
+      <p><strong>Valor:</strong> R$ 1.800.000 | <strong>Duração:</strong> 12 meses (+ extensões)</p>
+      <p><strong>Narrativa:</strong> Colapso operacional com múltiplas falhas:</p>
+      <ul style="padding-left: 20px; margin: 8px 0; color: #475569; font-size: 0.9rem; line-height: 1.5;">
+        <li>Paralisação por problemas trabalhistas</li>
+        <li>Gestão de projetos ineficiente</li>
+        <li>Retrabalho significativo</li>
+        <li>Baixa produtividade (OEE: 50-60%)</li>
+      </ul>
+      <p><strong>Resultado:</strong> CPI 0.71 | SPI 0.67 | Estouro: 41%</p>
+
+      <h4 style="color: var(--success); margin: 15px 0 8px 0;">📈 Cenário Otimizado</h4>
+      <p><strong>Valor:</strong> R$ 1.400.000 | <strong>Duração:</strong> 12 meses (entrega antecipada)</p>
+      <p><strong>Narrativa:</strong> Execução de excelência:</p>
+      <ul style="padding-left: 20px; margin: 8px 0; color: #475569; font-size: 0.9rem; line-height: 1.5;">
+        <li>Equipes especializadas e processos otimizados</li>
+        <li>Gestão proativa de riscos</li>
+        <li>Alta produtividade (OEE: 90-97%)</li>
+        <li>Economia de escala em compras</li>
+      </ul>
+      <p><strong>Resultado:</strong> CPI 1.12 | SPI 1.02 | Economia: 7%</p>
+
+      <h3>3. Métricas e Indicadores</h3>
+      <p>O dashboard apresenta <strong>métricas EVM completas</strong> conforme padrões PMI:</p>
+      <ul style="padding-left: 20px; margin: 8px 0; color: #475569; font-size: 0.9rem; line-height: 1.5;">
+        <li><strong>CPI/SPI:</strong> Eficiência de custo e prazo</li>
+        <li><strong>EAC/ETC:</strong> Estimativas de custo final e para conclusão</li>
+        <li><strong>VAC/TCPI:</strong> Variação no término e desempenho necessário</li>
+        <li><strong>OEE:</strong> Eficiência operacional de equipamentos</li>
+      </ul>
+
       <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
-      <p style="font-size:0.85rem; color:#94a3b8; text-align:center;">Desenvolvido por Silvanio Gois • 2025</p>
+      <p style="font-size:0.85rem; color:#94a3b8; text-align:center;">
+        Desenvolvido por Silvanio Gois • 2025<br>
+        <em>Dashboard educacional para demonstração de conceitos de EVM</em>
+      </p>
     </div>
   </div>
 </div>
 
 <script>
 /* ---------------------------
-   DADOS (CENÁRIOS REAIS)
+   DADOS MELHORADOS (MAIS REALISTAS)
    --------------------------- */
 const datasets = {
-  // CENÁRIO PADRÃO (REALISTA - ESTUDO DE CASO)
+  // CENÁRIO PADRÃO MELHORADO (MAIS REALISTA)
   B: {
     BAC: 1500000,
     services: [
@@ -457,61 +502,79 @@ const datasets = {
       {serv:'Acabamentos', resp:'Equipe D', qty:1, unit:300000, status:'Em Andamento'},
       {serv:'Paisagismo e Entrega', resp:'Equipe E', qty:1, unit:130000, status:'Planejado'}
     ],
-    // História: Início lento, recuperação forte, custo estoura no fim
+    // Curva S mais realista com variações
     planPct: [2, 8, 18, 30, 45, 60, 72, 82, 90, 96, 99, 100],
-    realPct: [2, 7, 14, 28, 44, 59, 71, 81, 88, 94, 97, 99], // Quase alcança
-    acReal:  [30000, 120000, 290000, 460000, 680000, 920000, 1100000, 1260000, 1390000, 1500000, 1600000, 1680000], // Estoura BAC
+    realPct: [1, 6, 13, 24, 38, 52, 65, 76, 85, 92, 96, 98], // Mais realista com atrasos
+    // Custo mais coerente com CPI ~0.89
+    acReal:  [35000, 130000, 300000, 500000, 750000, 980000, 1180000, 1350000, 1500000, 1640000, 1750000, 1840000],
+    // Riscos mais variados e realistas
     riscos: [
-      {p:1,i:1},{p:1,i:2},{p:4,i:3},{p:2,i:2},{p:3,i:2},{p:3,i:3},
-      {p:2,i:2},{p:2,i:2},{p:1,i:1},{p:4,i:4},{p:2,i:1},{p:1,i:1}
+      {p:2,i:2},{p:3,i:2},{p:4,i:3},{p:3,i:3},{p:2,i:2},{p:3,i:3},
+      {p:2,i:2},{p:2,i:2},{p:3,i:3},{p:4,i:4},{p:3,i:2},{p:2,i:2}
+    ],
+    // OEE mais coerente com problemas no projeto
+    ops: {
+      plannedProd: [100, 400, 1000, 1800, 2800, 3800, 4300, 4800, 5100, 5300, 5400, 5450],
+      actualProd:  [80, 320, 850, 1500, 2500, 3400, 4000, 4500, 4800, 5000, 5100, 5150],
+      oeePct:      [78, 75, 82, 79, 82, 85, 86, 88, 84, 80, 78, 82]
+    }
+  },
+  // CENÁRIO CRÍTICO MELHORADO
+  A: {
+    BAC: 1800000,
+    services: [
+      {serv:'Escavação', resp:'Eq A', qty:1, unit:600000, status:'Concluído'},
+      {serv:'Estrutura', resp:'Eq B', qty:1, unit:700000, status:'Paralisado'},
+      {serv:'Instalações', resp:'Eq C', qty:1, unit:300000, status:'Planejado'},
+      {serv:'Acabamentos', resp:'Eq D', qty:1, unit:200000, status:'Planejado'}
+    ],
+    planPct: [2, 8, 18, 30, 45, 60, 72, 82, 90, 96, 99, 100],
+    realPct: [1, 4, 8, 15, 22, 30, 38, 45, 52, 58, 63, 67], // Atraso severo
+    acReal:  [50000, 180000, 400000, 700000, 950000, 1200000, 1450000, 1700000, 1950000, 2200000, 2400000, 2550000],
+    riscos: [
+      {p:4,i:4},{p:4,i:4},{p:4,i:4},{p:4,i:4},{p:4,i:4},{p:4,i:4},
+      {p:4,i:4},{p:4,i:4},{p:4,i:4},{p:4,i:4},{p:4,i:4},{p:4,i:4}
     ],
     ops: {
       plannedProd: [100, 400, 1000, 1800, 2800, 3800, 4300, 4800, 5100, 5300, 5400, 5450],
-      actualProd:  [95, 350, 800, 1700, 2750, 3780, 4250, 4750, 5050, 5200, 5300, 5350],
-      oeePct:      [92, 91, 85, 89, 90, 94, 95, 93, 92, 88, 85, 90]
+      actualProd:  [60, 200, 450, 800, 1200, 1600, 1900, 2100, 2300, 2450, 2550, 2600],
+      oeePct:      [55, 52, 48, 50, 52, 54, 56, 58, 60, 62, 58, 55]
     }
   },
-  // CENÁRIO RUIM
-  A: {
-    BAC: 1800000,
-    services: datasets_mock_services('A'), // Helper abaixo
-    planPct: [2, 8, 18, 30, 45, 60, 72, 82, 90, 96, 99, 100],
-    realPct: [1, 5, 10, 20, 30, 40, 50, 55, 60, 65, 70, 75], // Muito atrasado
-    acReal:  [40000, 150000, 350000, 600000, 800000, 1000000, 1200000, 1400000, 1600000, 1800000, 1900000, 2000000],
-    riscos: Array(12).fill({p:4,i:4}),
-    ops: {
-      plannedProd: Array(12).fill(1000), actualProd: Array(12).fill(600), oeePct: Array(12).fill(50)
-    }
-  },
-  // CENÁRIO BOM
+  // CENÁRIO OTIMIZADO MELHORADO
   C: {
     BAC: 1400000,
-    services: datasets_mock_services('C'),
+    services: [
+      {serv:'Escavação e Fundações', resp:'Equipe A+', qty:1, unit:420000, status:'Concluído'},
+      {serv:'Estrutura de Concreto', resp:'Equipe B+', qty:1, unit:480000, status:'Concluído'},
+      {serv:'Instalações', resp:'Equipe C+', qty:1, unit:200000, status:'Concluído'},
+      {serv:'Acabamentos', resp:'Equipe D+', qty:1, unit:200000, status:'Em Andamento'},
+      {serv:'Paisagismo', resp:'Equipe E+', qty:1, unit:100000, status:'Planejado'}
+    ],
     planPct: [2, 8, 18, 30, 45, 60, 72, 82, 90, 96, 99, 100],
-    realPct: [3, 10, 22, 35, 50, 65, 78, 88, 95, 98, 100, 100], // Adiantado
-    acReal:  [20000, 100000, 250000, 400000, 600000, 800000, 950000, 1100000, 1200000, 1300000, 1350000, 1380000],
-    riscos: Array(12).fill({p:1,i:1}),
+    realPct: [3, 10, 22, 36, 52, 68, 80, 90, 96, 99, 100, 100], // Adiantado
+    acReal:  [25000, 90000, 220000, 370000, 550000, 730000, 880000, 1010000, 1100000, 1180000, 1220000, 1250000],
+    riscos: [
+      {p:1,i:1},{p:1,i:1},{p:1,i:1},{p:1,i:1},{p:1,i:1},{p:1,i:1},
+      {p:1,i:1},{p:1,i:1},{p:1,i:1},{p:1,i:1},{p:1,i:1},{p:1,i:1}
+    ],
     ops: {
-      plannedProd: Array(12).fill(1000), actualProd: Array(12).fill(1100), oeePct: Array(12).fill(98)
+      plannedProd: [100, 400, 1000, 1800, 2800, 3800, 4300, 4800, 5100, 5300, 5400, 5450],
+      actualProd:  [110, 450, 1100, 1950, 3000, 4000, 4500, 5000, 5300, 5450, 5500, 5500],
+      oeePct:      [95, 94, 96, 95, 96, 97, 96, 95, 94, 93, 92, 90]
     }
   }
 };
-
-function datasets_mock_services(type){
-   return [
-      {serv:'Escavação', resp:'Eq A', qty:1, unit:500000, status:'Concluído'},
-      {serv:'Estrutura', resp:'Eq B', qty:1, unit:600000, status:'Andamento'}
-   ];
-}
 
 const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
 /* UTIL */
 function formatBR(n){ return 'R$ ' + Number(n).toLocaleString('pt-BR',{maximumFractionDigits:0}); }
 function p2(n){ return Number(n).toFixed(2); }
+function p1(n){ return Number(n).toFixed(1); }
 function getColor(n){ return n>=1 ? 'var(--success)' : n>=0.9 ? 'var(--accent)' : 'var(--danger)'; }
 
-/* PROCESS DATA */
+/* PROCESS DATA - COM NOVAS MÉTRICAS */
 function processData(key){
   const ds = datasets[key];
   const competencias = [];
@@ -522,12 +585,18 @@ function processData(key){
      const real = ds.realPct[i];
      const PV = (plan/100) * BAC;
      const EV = (real/100) * BAC;
-     // Usa AC real se existir, senão simula
-     const AC = ds.acReal ? ds.acReal[i] : Math.round(EV / (key==='A'?0.8:1.1)); 
+     const AC = ds.acReal[i];
      
      const CPI = AC>0 ? EV/AC : 1;
      const SPI = PV>0 ? EV/PV : 1;
      const CV = EV - AC;
+     
+     // Novas métricas EVM
+     const EAC = AC + (BAC - EV) / CPI;
+     const ETC = EAC - AC;
+     const VAC = BAC - EAC;
+     const TCPI = (BAC - EV) / (BAC - AC);
+     
      const fase = i<3?'Fundação': i<7?'Estrutura': i<10?'Acabamento':'Entrega';
      
      // Ops
@@ -539,6 +608,7 @@ function processData(key){
        mes: months[i], fase,
        planPct: plan, realPct: real,
        PV, AC, EV, CV, CPI, SPI,
+       EAC, ETC, VAC, TCPI, // Novas métricas
        risco: ds.riscos[i],
        planProd, actProd, oee
      });
@@ -556,10 +626,9 @@ function init(){
   
   // Filter logic
   let subset = data.competencias;
-  if(period === 'ACUMULADO') subset = subset.slice(0, new Date().getMonth()+1); // Simula até hoje
+  if(period === 'ACUMULADO') subset = subset.slice(0, new Date().getMonth()+1);
   else if(period === 'Q1') subset = subset.slice(0,3);
   else if(period === 'Q2') subset = subset.slice(3,6);
-  // else YEAR (full)
 
   renderKPIs(subset, data.BAC);
   renderTable(subset);
@@ -578,23 +647,18 @@ function renderKPIs(subset, BAC){
     <div class="kpi"><div class="label">Valor Agregado (EV)</div><div class="value">${formatBR(last.EV)}</div></div>
     <div class="kpi"><div class="label">Custo Real (AC)</div><div class="value" style="color:${last.AC>last.EV?'var(--danger)':'var(--brand)'}">${formatBR(last.AC)}</div></div>
     <div class="kpi"><div class="label">Variação Custo (CV)</div><div class="value" style="color:${last.CV>=0?'var(--success)':'var(--danger)'}">${formatBR(last.CV)}</div></div>
-    <div class="kpi"><div class="label">Orçamento (BAC)</div><div class="value">${formatBR(BAC)}</div></div>
+    <div class="kpi"><div class="label">TCPI</div><div class="value" style="color:${last.TCPI<=1?'var(--success)':'var(--danger)'}">${p2(last.TCPI)}</div></div>
    `;
    document.getElementById('kpiSection').innerHTML = html;
 }
 
 function renderOps(subset){
   const last = subset[subset.length-1];
-  // Monthly delta
-  const prev = subset.length>1 ? subset[subset.length-2] : {planProd:0, actProd:0};
-  const mPlan = last.planProd - prev.planProd; // Simplificado
-  const monthPlan = (subset.length===1) ? last.planProd : last.planProd - prev.planProd;
-  const monthReal = (subset.length===1) ? last.actProd : last.actProd - prev.actProd;
-
   document.getElementById('opsGrid').innerHTML = `
      <div class="ops-card"><div class="label">Prod. Acumulada Plan.</div><div class="value">${last.planProd} un</div></div>
      <div class="ops-card"><div class="label">Prod. Acumulada Real</div><div class="value">${last.actProd} un</div></div>
      <div class="ops-card"><div class="label">OEE Atual</div><div class="value" style="color:${getColor(last.oee/100)}">${last.oee}%</div></div>
+     <div class="ops-card"><div class="label">Eficiência Produtiva</div><div class="value" style="color:${last.actProd/last.planProd>=1?'var(--success)':'var(--danger)'}">${p1(last.actProd/last.planProd*100)}%</div></div>
   `;
 }
 
@@ -610,7 +674,7 @@ function renderTable(subset){
       <td style="color:${getColor(r.CPI)}">${p2(r.CPI)}</td>
       <td style="color:${getColor(r.SPI)}">${p2(r.SPI)}</td>
       <td style="color:${r.CV>=0?'var(--success)':'var(--danger)'}">${formatBR(r.CV)}</td>
-      <td><span style="color:${r.risco.p*r.risco.i >= 12 ? 'var(--danger)' : 'var(--success)'}">●</span> ${r.risco.p*r.risco.i}</td>
+      <td><span style="color:${r.risco.p*r.risco.i >= 12 ? 'var(--danger)' : r.risco.p*r.risco.i >= 6 ? 'var(--accent)' : 'var(--success)'}">●</span> ${r.risco.p*r.risco.i}</td>
     </tr>
   `).join('');
 }
@@ -642,19 +706,26 @@ function renderServices(list){
 
 function renderSummary(subset, BAC){
   const last = subset[subset.length-1];
-  const EAC = last.AC + (BAC - last.EV) / last.CPI; // Forecast calculation
   
   document.getElementById('summaryText').innerHTML = `
     <strong>Status Atual:</strong> O projeto atingiu <b>${last.realPct}%</b> de avanço físico. 
     O índice de custo (CPI) de ${p2(last.CPI)} indica que para cada R$ 1 investido, a obra entregou R$ ${p2(last.CPI)}.
     <br><br>
-    <strong>Previsão:</strong> Se o ritmo atual for mantido, o custo final estimado (EAC) será de <b>${formatBR(EAC)}</b>, uma variação de ${formatBR(EAC-BAC)} sobre o orçamento.
+    <strong>Previsões:</strong>
+    <ul style="margin:8px 0; padding-left:20px;">
+      <li><strong>EAC:</strong> ${formatBR(last.EAC)} (custo final estimado)</li>
+      <li><strong>VAC:</strong> <span style="color:${last.VAC>=0?'var(--success)':'var(--danger)'}">${formatBR(last.VAC)}</span> (variação no término)</li>
+      <li><strong>ETC:</strong> ${formatBR(last.ETC)} (estimativa para concluir)</li>
+      <li><strong>TCPI:</strong> <span style="color:${last.TCPI<=1?'var(--success)':'var(--danger)'}">${p2(last.TCPI)}</span> (desempenho necessário)</li>
+    </ul>
   `;
   
   const recs = [
     last.CPI < 1 ? 'Renegociar contratos da fase de acabamento para estancar variação de custo.' : 'Manter política de compras atual.',
     last.SPI < 1 ? 'Aumentar turno de trabalho (Crashing) nas atividades do caminho crítico.' : 'Cronograma saudável, monitorar riscos.',
-    'Revisar reserva de contingência para cobrir o EAC projetado.'
+    last.TCPI > 1 ? 'Implementar medidas rigorosas de controle de custos para atingir o TCPI necessário.' : 'TCPI dentro do alcançável, manter esforços.',
+    last.VAC < 0 ? 'Revisar reserva de contingência para cobrir o VAC negativo projetado.' : 'Reserva de contingência adequada.',
+    'Realizar análise de causa raiz para os desvios identificados.'
   ];
   document.getElementById('recommendations').innerHTML = recs.map(r=>`<li>${r}</li>`).join('');
 }
@@ -676,6 +747,7 @@ function renderCharts(subset, BAC){
    createChart('chartFinanceiro', 'line', {
      labels,
      datasets:[
+       {label:'PV (Planejado)', data:subset.map(s=>s.PV), borderColor:'#94a3b8', borderDash:[5,5]},
        {label:'AC (Gasto)', data:subset.map(s=>s.AC), borderColor:'#dc3545'},
        {label:'EV (Valor)', data:subset.map(s=>s.EV), borderColor:'#28a745'}
      ]
@@ -683,11 +755,10 @@ function renderCharts(subset, BAC){
 
    // 3. EAC Donut
    const last = subset[subset.length-1];
-   const EAC = last.AC + (BAC - last.EV)/last.CPI;
    createChart('donutEAC', 'doughnut', {
      labels: ['Realizado (AC)', 'A Realizar (ETC)', 'Estouro'],
      datasets:[{
-       data: [last.AC, (BAC-last.EV), Math.max(0, EAC-BAC)],
+       data: [last.AC, Math.max(0, last.ETC), Math.max(0, last.EAC-BAC)],
        backgroundColor: ['#334155', '#cbd5e1', '#dc3545']
      }]
    });
@@ -697,7 +768,9 @@ function renderCharts(subset, BAC){
      labels,
      datasets:[{
        label:'P x I', data:subset.map(s=>s.risco.p*s.risco.i),
-       backgroundColor: subset.map(s=> (s.risco.p*s.risco.i)>=12 ? '#dc3545' : '#ffb84d')
+       backgroundColor: subset.map(s=> 
+         (s.risco.p*s.risco.i)>=12 ? '#dc3545' : 
+         (s.risco.p*s.risco.i)>=6 ? '#ffb84d' : '#28a745')
      }]
    });
 
@@ -705,6 +778,7 @@ function renderCharts(subset, BAC){
    createChart('prodChart', 'bar', {
       labels,
       datasets: [
+         {label:'Planejado', data: subset.map(s=>s.planProd), backgroundColor:'#94a3b8'},
          {label:'Real', data: subset.map(s=>s.actProd), backgroundColor:'rgb(39, 98, 141)'}
       ]
    });
@@ -713,7 +787,7 @@ function renderCharts(subset, BAC){
    createChart('oeeChart', 'line', {
       labels,
       datasets: [{label:'OEE %', data: subset.map(s=>s.oee), borderColor:'#ffb84d', fill:true, backgroundColor:'rgba(255,184,77,0.1)'}]
-   }, {scales:{y:{min:50, max:100}}});
+   }, {scales:{y:{min:40, max:100}}});
 }
 
 function createChart(id, type, data, extraOptions={}){

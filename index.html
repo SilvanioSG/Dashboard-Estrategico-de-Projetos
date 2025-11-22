@@ -480,55 +480,88 @@
       
       <h3>1. Contexto e Metodologia</h3>
       <p>Simulação de um empreendimento utilizando <strong>EVM (Earned Value Management)</strong> - metodologia que integra escopo, prazo e custos para medir performance real do projeto.</p>
-      <p><strong>Orçamento Base:</strong> R$ 1.5M (varia conforme cenário)</p>
+      <p><strong>Funcionalidades Principais:</strong></p>
+      <ul style="padding-left: 20px; margin: 8px 0; color: #475569; font-size: 0.9rem; line-height: 1.5;">
+        <li><strong>3 Cenários Realistas:</strong> Simulações com dados coerentes e relações matemáticas validadas</li>
+        <li><strong>Filtros Temporais:</strong> Análise por ano completo, YTD, trimestres (Q1-Q4)</li>
+        <li><strong>Métricas EVM Completas:</strong> CPI, SPI, EAC, VAC, TCPI seguindo padrões PMI</li>
+        <li><strong>Indicadores Operacionais:</strong> OEE, produtividade, gestão de riscos integrada</li>
+      </ul>
 
-      <h3>2. Cenários Disponíveis</h3>
+      <h3>2. Cenários Disponíveis - Dados Atualizados e Coerentes</h3>
       
       <h4 style="color: var(--brand); margin: 15px 0 8px 0;">🏗️ Cenário Realista (Padrão)</h4>
       <p><strong>Valor:</strong> R$ 1.500.000 | <strong>Duração:</strong> 12 meses</p>
-      <p><strong>Narrativa:</strong> Projeto com desafios típicos de construção civil:</p>
+      <p><strong>Narrativa Realista:</strong></p>
       <ul style="padding-left: 20px; margin: 8px 0; color: #475569; font-size: 0.9rem; line-height: 1.5;">
-        <li><strong>Q1:</strong> Atrasos em licenciamento ambiental e chuvas</li>
-        <li><strong>Q2-Q3:</strong> Escassez de materiais e mão-de-obra especializada</li>
-        <li><strong>Q4:</strong> Aceleração custosa para mitigar atrasos</li>
+        <li><strong>Q1 (Jan-Mar):</strong> Atrasos em licenciamento - progresso 13% vs 18% planejado</li>
+        <li><strong>Q2-Q3 (Abr-Set):</strong> Escassez de materiais - eficiência operacional 79-88%</li>
+        <li><strong>Q4 (Out-Dez):</strong> Aceleração custosa para mitigar atrasos</li>
       </ul>
-      <p><strong>Resultado:</strong> CPI 0.89 (estouro de custo) | SPI 0.98 (atraso leve)</p>
+      <p><strong>Resultado Final Coerente:</strong> CPI 0.80 (estouro de 25%) | SPI 0.98 (atraso leve) | OEE Médio: 81%</p>
 
       <h4 style="color: var(--danger); margin: 15px 0 8px 0;">🚨 Cenário Crítico</h4>
-      <p><strong>Valor:</strong> R$ 1.800.000 | <strong>Duração:</strong> 12 meses (+ extensões)</p>
-      <p><strong>Narrativa:</strong> Colapso operacional com múltiplas falhas:</p>
+      <p><strong>Valor:</strong> R$ 1.800.000 | <strong>Duração:</strong> 12 meses</p>
+      <p><strong>Narrativa de Colapso:</strong></p>
       <ul style="padding-left: 20px; margin: 8px 0; color: #475569; font-size: 0.9rem; line-height: 1.5;">
-        <li>Paralisação por problemas trabalhistas</li>
-        <li>Gestão de projetos ineficiente</li>
-        <li>Retrabalho significativo</li>
-        <li>Baixa produtividade (OEE: 50-60%)</li>
+        <li>Paralisação por problemas trabalhistas desde Q2</li>
+        <li>Gestão ineficiente - riscos altos em todos os meses (PxI ≥ 16)</li>
+        <li>Produtividade apenas 38% do planejado</li>
+        <li>OEE crítico: 52-62% (equipamentos subutilizados)</li>
       </ul>
-      <p><strong>Resultado:</strong> CPI 0.71 | SPI 0.67 | Estouro: 41%</p>
+      <p><strong>Resultado Final Coerente:</strong> CPI 0.47 | SPI 0.67 | Estouro: 111% | OEE Médio: 56%</p>
 
       <h4 style="color: var(--success); margin: 15px 0 8px 0;">📈 Cenário Otimizado</h4>
-      <p><strong>Valor:</strong> R$ 1.400.000 | <strong>Duração:</strong> 12 meses (entrega antecipada)</p>
-      <p><strong>Narrativa:</strong> Execução de excelência:</p>
+      <p><strong>Valor:</strong> R$ 1.400.000 | <strong>Duração:</strong> 12 meses</p>
+      <p><strong>Narrativa de Excelência:</strong></p>
       <ul style="padding-left: 20px; margin: 8px 0; color: #475569; font-size: 0.9rem; line-height: 1.5;">
-        <li>Equipes especializadas e processos otimizados</li>
-        <li>Gestão proativa de riscos</li>
-        <li>Alta produtividade (OEE: 90-97%)</li>
-        <li>Economia de escala em compras</li>
+        <li>Equipes especializadas - entrega antecipada em Novembro</li>
+        <li>Processos otimizados - produtividade 10% acima do planejado</li>
+        <li>Gestão proativa de riscos - todos os meses com risco baixo (PxI ≤ 1)</li>
+        <li>OEE excelente: 90-97% (eficiência máxima)</li>
       </ul>
-      <p><strong>Resultado:</strong> CPI 1.12 | SPI 1.02 | Economia: 7%</p>
+      <p><strong>Resultado Final Coerente:</strong> CPI 1.12 | SPI 1.00 | Economia: 11% | OEE Médio: 94%</p>
 
-      <h3>3. Métricas e Indicadores</h3>
-      <p>O dashboard apresenta <strong>métricas EVM completas</strong> conforme padrões PMI:</p>
+      <h3>3. Funcionalidades Técnicas Implementadas</h3>
+      
+      <h4 style="margin: 12px 0 6px 0;">📊 Filtros de Período</h4>
+      <ul style="padding-left: 20px; margin: 6px 0; color: #475569; font-size: 0.9rem; line-height: 1.5;">
+        <li><strong>Visão Completa (Ano):</strong> Todos os 12 meses do projeto</li>
+        <li><strong>Acumulado (YTD):</strong> Janeiro a Setembro - simulação realista</li>
+        <li><strong>Trimestres (Q1-Q4):</strong> Análise detalhada por fase do projeto</li>
+      </ul>
+
+      <h4 style="margin: 12px 0 6px 0;">🎯 Métricas EVM Precisas</h4>
+      <ul style="padding-left: 20px; margin: 6px 0; color: #475569; font-size: 0.9rem; line-height: 1.5;">
+        <li><strong>CPI (Cost Performance Index):</strong> EV/AC - Eficiência de custo</li>
+        <li><strong>SPI (Schedule Performance Index):</strong> EV/PV - Eficiência de prazo</li>
+        <li><strong>EAC (Estimate at Completion):</strong> AC + (BAC - EV)/CPI - Previsão de custo final</li>
+        <li><strong>VAC (Variance at Completion):</strong> BAC - EAC - Variação total prevista</li>
+        <li><strong>TCPI (To Complete Performance Index):</strong> (BAC - EV)/(BAC - AC) - Desempenho necessário</li>
+      </ul>
+
+      <h4 style="margin: 12px 0 6px 0;">⚙️ Indicadores Operacionais Integrados</h4>
+      <ul style="padding-left: 20px; margin: 6px 0; color: #475569; font-size: 0.9rem; line-height: 1.5;">
+        <li><strong>OEE (Overall Equipment Effectiveness):</strong> Eficiência de equipamentos (0-100%)</li>
+        <li><strong>Produtividade:</strong> Unidades produzidas vs planejado</li>
+        <li><strong>Gestão de Riscos:</strong> Matriz Probabilidade x Impacto (1-16)</li>
+        <li><strong>Curva S:</strong> Evolução física e financeira do projeto</li>
+      </ul>
+
+      <h3>4. Coerência e Validação dos Dados</h3>
+      <p>Todas as relações matemáticas foram validadas:</p>
       <ul style="padding-left: 20px; margin: 8px 0; color: #475569; font-size: 0.9rem; line-height: 1.5;">
-        <li><strong>CPI/SPI:</strong> Eficiência de custo e prazo</li>
-        <li><strong>EAC/ETC:</strong> Estimativas de custo final e para conclusão</li>
-        <li><strong>VAC/TCPI:</strong> Variação no término e desempenho necessário</li>
-        <li><strong>OEE:</strong> Eficiência operacional de equipamentos</li>
+        <li>✅ <strong>Progresso Físico × Custo = Coerente</strong></li>
+        <li>✅ <strong>OEE × Produtividade = Coerente</strong></li>
+        <li>✅ <strong>Riscos × Performance = Coerente</strong></li>
+        <li>✅ <strong>Filtros × Cálculos Acumulados = Coerente</strong></li>
+        <li>✅ <strong>Narrativas × Dados Reais = Coerente</strong></li>
       </ul>
 
       <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
       <p style="font-size:0.85rem; color:#94a3b8; text-align:center;">
         Desenvolvido por Silvanio Gois • 2025<br>
-        <em>Dashboard educacional para demonstração de conceitos de EVM</em>
+        <em>Dashboard técnico com dados realistas e relações validadas - EVM aplicado</em>
       </p>
     </div>
   </div>
